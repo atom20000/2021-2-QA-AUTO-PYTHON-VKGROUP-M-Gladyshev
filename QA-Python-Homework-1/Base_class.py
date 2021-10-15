@@ -25,7 +25,9 @@ class BaseCase:
 
     def send_key(self,locator,key,timeout=None):
         elem = self.find_elem(locator,timeout)
+        elem.clear()
         elem.send_keys(key)
+
 
     def login(self,set_log_pwd):
         self.click_elem(Main_page.LOG_IN_BUTTON)
