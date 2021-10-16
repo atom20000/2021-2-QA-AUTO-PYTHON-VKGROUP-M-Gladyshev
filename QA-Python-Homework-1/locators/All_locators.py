@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class Main_page():
+    SPINER = (By.XPATH, '//div[contains(@class, "spinner_")]')
     OTHER_CORNER_BUTTON = (By.CLASS_NAME, 'responseHead-module-burger-1u0Lts')
     LOG_IN_BUTTON = (By.CLASS_NAME, 'responseHead-module-button-2yl51i')
     USER_NAME_RIGHT_MODULE = (By.CLASS_NAME, 'right-module-userNameWrap-3Odw2D')
