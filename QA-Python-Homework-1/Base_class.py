@@ -28,10 +28,15 @@ class BaseCase:
         elem.clear()
         elem.send_keys(key)
 
-
     def login(self,set_log_pwd):
-        self.click_elem(Main_page.LOG_IN_BUTTON)
+        self.check_button_not_hidden(Main_page.LOG_IN_BUTTON, Main_page.OTHER_CORNER_BUTTON)
         self.send_key(LogIn_Form.LOG_IN_FORM,set_log_pwd[0])
         self.send_key(LogIn_Form.PWD_FORM,set_log_pwd[1])
         self.click_elem(LogIn_Form.LOG_IN_BUTTON)
 
+    def check_button_not_hidden(self,locator,locator_hide_button):
+        if self.find_elem(locator).is_displayed():
+            self.click_elem(locator)
+        else:
+            self.click_elem(locator_hide_button)
+            self.click_elem(locator)

@@ -2,10 +2,13 @@ from selenium.webdriver.common.by import By
 
 
 class Main_page():
+    OTHER_CORNER_BUTTON = (By.CLASS_NAME, 'responseHead-module-burger-1u0Lts')
     LOG_IN_BUTTON = (By.CLASS_NAME, 'responseHead-module-button-2yl51i')
     USER_NAME_RIGHT_MODULE = (By.CLASS_NAME, 'right-module-userNameWrap-3Odw2D')
     OTHER_CENTRAL_BUTTON = (By.XPATH, '//li/span')
     PROFILE_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/profile")]')
+    AUDITORIUM_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/segments")]')
+    TOOLS_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/tools")]')
 
 class LogIn_Form():
     LOG_IN_FORM = (By.XPATH,'//input[@name="email"]')
