@@ -5,6 +5,9 @@ executable_path = r'/usr/bin/chromedriver'
 Login_mytarget = 'rarebe2161@wii999.com'
 Pasword_mytarget = 'smB-g7E-rPu-TZ7'
 
+New_FIO = 'gdhgdl'
+New_Phone = '79359-35352'
+
 #Фикстура по созданию экземпляра драйвера
 @pytest.fixture(scope='function')
 def driver():
@@ -22,4 +25,4 @@ def set_log_pwd():
 #Фикстура по установки ФИО и телефона для изменения контактной информации
 @pytest.fixture(scope='function')
 def set_contact_inf():
-    return ('gdhgdl','79359-35352')
+    return (New_FIO, New_Phone)
