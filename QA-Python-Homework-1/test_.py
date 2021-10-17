@@ -8,8 +8,7 @@ class TestClass(BaseCase):
 
     #@pytest.mark.skip("SKIP")
     @pytest.mark.UI
-    def test_login(self,set_log_pwd):
-        self.login(set_log_pwd)
+    def test_login(self,login):
         assert self.driver.current_url == 'https://target.my.com/dashboard'
 
 
@@ -17,8 +16,7 @@ class TestClass(BaseCase):
 
     #@pytest.mark.skip("SKIP")
     @pytest.mark.UI
-    def test_logout(self,set_log_pwd):
-        self.login(set_log_pwd)
+    def test_logout(self,login):
         self.logout()
         assert self.driver.current_url == 'https://target.my.com/'
 
@@ -27,8 +25,7 @@ class TestClass(BaseCase):
 
     #@pytest.mark.skip("SKIP")
     @pytest.mark.UI
-    def test_contact(self,set_log_pwd,set_contact_inf):
-        self.login(set_log_pwd)
+    def test_contact(self,login,set_contact_inf):
         self.check_button_not_hidden(Main_page.PROFILE_BUTTON, Main_page.OTHER_CENTRAL_BUTTON)
         self.send_key(Contact_Form.FIO_FIELD,set_contact_inf[0])
         self.send_key(Contact_Form.PHONE_FIELD,set_contact_inf[1])
@@ -50,8 +47,7 @@ class TestClass(BaseCase):
             (Main_page.TOOLS_BUTTON,'https://target.my.com/tools')
         ]
     )
-    def test_central_buttons(self, set_log_pwd, locator, url):
-        self.login(set_log_pwd)
+    def test_central_buttons(self, login, locator, url):
         self.check_button_not_hidden(locator, Main_page.OTHER_CENTRAL_BUTTON)
         assert self.driver.current_url.find(url) !=-1
         self.logout()
