@@ -1,5 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException
 from locators.All_locators import *
 import pytest
 
@@ -7,7 +8,7 @@ class BaseCase:
 
     driver = None
 
-    RETRY_CLICK = 3
+    RETRY_CLICK = 4
 
     #Фикстура устанавливающая драйвер в переенной класса
     @pytest.fixture(scope='function', autouse=True)
@@ -32,7 +33,9 @@ class BaseCase:
                 elem = self.wait_elem(timeout).until(EC.element_to_be_clickable(locator))
                 elem.click()
                 return
-            except:
+            except (StaleElementReferenceException,
+             ElementClickInterceptedException, 
+             ElementNotInteractableException,):
                 if i==self.RETRY_CLICK-1: raise
 
     #Функция по отправлению данных в поля ввода
@@ -41,7 +44,7 @@ class BaseCase:
         elem.clear()
         elem.send_keys(key)
 
-    #Функция по проверке, что кнопка не скрыта в меню
+    #Функция по проверке, что кнопка не скрыта в меню (Если окно маленького размера)
     def check_button_not_hidden(self,locator,locator_hide_button):
         if self.find_elem(locator).is_displayed():
             self.click_elem(locator)
@@ -49,7 +52,8 @@ class BaseCase:
             self.click_elem(locator_hide_button)
             self.click_elem(locator)
 
-    #Фунция по входу на сайт
+    #Фикстура по входу на сайт
+    @pytest.fixture(scope='function')
     def login(self,set_log_pwd):
         self.check_button_not_hidden(Main_page.LOG_IN_BUTTON, Main_page.OTHER_CORNER_BUTTON)
         self.send_key(LogIn_Form.LOG_IN_FORM,set_log_pwd[0])
