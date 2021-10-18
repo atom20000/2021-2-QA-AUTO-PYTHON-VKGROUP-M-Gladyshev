@@ -56,8 +56,8 @@ class BaseCase:
     @pytest.fixture(scope='function')
     def login(self,set_log_pwd):
         self.check_button_not_hidden(Main_page.LOG_IN_BUTTON, Main_page.OTHER_CORNER_BUTTON)
-        self.send_key(LogIn_Form.LOG_IN_FORM,set_log_pwd[0])
-        self.send_key(LogIn_Form.PWD_FORM,set_log_pwd[1])
+        self.send_key(LogIn_Form.LOG_IN_FORM,set_log_pwd['LOGIN'])
+        self.send_key(LogIn_Form.PWD_FORM,set_log_pwd['PWD'])
         self.click_elem(LogIn_Form.LOG_IN_BUTTON)
 
     #Функция по выходу с сайта
