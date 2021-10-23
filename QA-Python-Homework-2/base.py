@@ -3,6 +3,7 @@ from pages.Base_page import Base_page
 import pytest
 from fixtures import get_driver
 from pages.Login_page import Login_page
+from pages.Start_page import Start_page
 
 class BaseCase():
 
@@ -13,7 +14,7 @@ class BaseCase():
 
         self.driver = driver
         
-        self.start_page = request.getfixturevalue('start_page')
+        self.start_page : Start_page = request.getfixturevalue('start_page')
         
         #if self.authtorize:
         #    cookies = request.getfixturevalue('cookies_login')
