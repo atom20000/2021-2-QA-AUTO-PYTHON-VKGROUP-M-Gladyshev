@@ -8,17 +8,18 @@ class BaseCase():
 
     driver = None
 
-    authtorize = True
-
     @pytest.fixture(scope='function', autouse=True)
-    def setup(self, request: FixtureRequest):
+    def setup(self,driver, request: FixtureRequest):
 
-        #Login_page(self.driver).login('rarebe2161@wii999.com','smB-g7E-rPu-TZ7')
-        if self.authtorize:
-            cookies = request.getfixturevalue('cookies_login')
-            self.driver = request.getfixturevalue('driver')
-            for cookie in cookies:
-                self.driver.add_cookie(cookie)
-            self.driver.refresh()
-        self.base_page: Base_page = request.getfixturevalue('base_page')
+        self.driver = driver
+        
+        self.start_page = request.getfixturevalue('start_page')
+        
+        #if self.authtorize:
+        #    cookies = request.getfixturevalue('cookies_login')
+        #    self.driver = request.getfixturevalue('driver')
+        #    for cookie in cookies:
+        #        self.driver.add_cookie(cookie)
+        #    self.driver.refresh()
+        #self.base_page: Base_page = request.getfixturevalue('base_page')
         
