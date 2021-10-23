@@ -19,6 +19,7 @@ class LoginPageLocators(BasicLocators):
     LOG_IN_FORM = (By.XPATH,'//input[@name="email"]')
     PWD_FORM = (By.XPATH,'//input[@name="password"]')
     LOG_IN_BUTTON = (By.XPATH,'//div[contains(@class,"authForm-module-button")]')
+    LOGIN_ERROR = (By.XPATH, '//div[contains(@class, "notify-module-content")]')
 
 #Локаторы для выхода из системы
 class LogOut_Form(BasicLocators):
