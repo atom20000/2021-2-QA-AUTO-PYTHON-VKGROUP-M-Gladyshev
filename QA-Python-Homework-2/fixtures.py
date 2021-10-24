@@ -13,7 +13,7 @@ def start_page(driver):
 @pytest.fixture(scope='session')
 def cookies_login():
     browser = get_driver()
-    browser.get('https://target.my.com/')
+    browser.get('https://target.my.com/') # Проверку натип мб надо 
     Start_page(browser).go_to_login().login(LOGIN_MYTARGET,PASSWORD_MYTARGET)
     cookies = browser.get_cookies()
     browser.quit()
