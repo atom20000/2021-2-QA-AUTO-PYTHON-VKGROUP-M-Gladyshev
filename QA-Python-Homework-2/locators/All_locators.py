@@ -7,6 +7,10 @@ class StartPageLocators(BasicLocators):
     OTHER_CORNER_BUTTON = (By.XPATH, '//div[contains(@class,"responseHead-module-burger")]')
     LOG_IN_BUTTON_MAIN = (By.XPATH, '//div[contains(@class, "responseHead-module-button")]')
 
+class AccountMyPageLocators(BasicLocators):
+    MSG_ERROR_TITLE_LOGIN =(By.CLASS_NAME, 'formMsg_title')
+    MSG_ERROR_TEXT_LOGIN = (By.CLASS_NAME, 'formMsg_text')
+
 #Локаторы с главных страниц и из центральной панели
 class MainPageLocators(BasicLocators):
     OTHER_CENTRAL_BUTTON = (By.XPATH, '//li/span[contains(@class, "center-module-button")]')
