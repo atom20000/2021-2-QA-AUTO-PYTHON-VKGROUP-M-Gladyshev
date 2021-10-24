@@ -31,8 +31,12 @@ class SegmentsPageLocators(MainPageLocators):
     CHECKBOX_BUTTON = (By.XPATH, '//input[contains(@class, "adding-segments-source__checkbox")]')
     CREATE_SEGMENT_BUTTON = (By.XPATH, '//button[contains(@data-class-name, "Submit")]')
     ADD_NAME_SEGMENT = (By.XPATH, '//div[contains(@class, "segment-name")]//input[contains(@class, "input")]')
+    CHOICE_VARIANT_SEGMENT = (By.XPATH, '//div[contains(text(), "Приложения и игры в соцсетях")]')
     ADD_SEGMENT_BUTTON = (By.XPATH, f'//div[contains(@class, "adding-segments-modal__footer")]{CREATE_SEGMENT_BUTTON[1]}')
     LAST_PAGE_CREATE_BUTTON = (By.XPATH, f'//div[contains(@class, "create-button-wrap")]{CREATE_SEGMENT_BUTTON[1]}')
+    TEMPLATE_NAME_SEGMENT =(By.XPATH, '//a[contains(@title, "{}")]')
+    REMOVE_BUTTON = (By.XPATH, '//span[contains(@class, "icon-cross")]')
+    POP_UP_REMOVE_BUTTON = (By.XPATH, '//button[contains(@class, "button_confirm-remove")]')
 
 #Локаторы для выхода из системы
 class LogOut_Form(BasicLocators):
