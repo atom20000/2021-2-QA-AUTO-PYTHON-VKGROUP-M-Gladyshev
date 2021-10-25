@@ -23,6 +23,7 @@ class MainPageLocators(BasicLocators):
     OTHER_CENTRAL_BUTTON = (By.XPATH, '//li/span[contains(@class, "center-module-button")]')
     PROFILE_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/profile")]')
     AUDITORIUM_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/segments")]')
+    DASHBOARD_BUTTON = (By.XPATH, '//li/a[contains(@href, "/dashboard")]')
     TOOLS_BUTTON = (By.XPATH ,'//li/a[contains(@href, "/tools")]')
 
 class SegmentsPageLocators(MainPageLocators):
@@ -37,6 +38,9 @@ class SegmentsPageLocators(MainPageLocators):
     TEMPLATE_NAME_SEGMENT =(By.XPATH, '//a[contains(@title, "{}")]')
     REMOVE_BUTTON = (By.XPATH, '//div[contains(@data-test, "remove-{}")]//span[contains(@class, "icon-cross")]')
     POP_UP_REMOVE_BUTTON = (By.XPATH, '//button[contains(@class, "button_confirm-remove")]')
+
+class DashboardPageLocators(MainPageLocators):
+    pass
 
 #Локаторы для выхода из системы
 class LogOut_Form(BasicLocators):
