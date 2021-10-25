@@ -1,5 +1,4 @@
 from pages.Main_page import Main_page
-#from pages.Base_page import Base_page
 from locators.All_locators import SegmentsPageLocators
 
 class Segment_page(Main_page):
@@ -23,4 +22,3 @@ class Segment_page(Main_page):
             segment = segment.get_attribute("href")
             self.click_elem((self.locators.REMOVE_BUTTON[0], self.locators.REMOVE_BUTTON[1].format(segment[segment.rfind("/")+1:])))
             self.click_elem(self.locators.POP_UP_REMOVE_BUTTON)
-            
