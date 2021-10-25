@@ -30,9 +30,7 @@ def test_create_segment(auto_main_page :Main_page ):
     segment_name = f'test_create_segment{time.time()}'
     segment_page.Create_segment(segment_name)
     assert segment_page.find_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
-    time.sleep(2)
-    segment_page.Remove_segment('test_create_segment1635102926.3020463')
-    time.sleep(5)
+    segment_page.Remove_segment(segment_name)
 
 #@pytest.mark.skip('SKIP')
 #@pytest.mark.UI
