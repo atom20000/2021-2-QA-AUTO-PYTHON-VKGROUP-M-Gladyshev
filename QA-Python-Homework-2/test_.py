@@ -23,14 +23,23 @@ class TestClass(BaseCase):
         assert page.find_elem(page.locators.MSG_ERROR_TITLE_LOGIN)
         assert page.find_elem(page.locators.MSG_ERROR_TEXT_LOGIN)
 
-#@pytest.mark.skip('SKIP')
+@pytest.mark.skip('SKIP')
 @pytest.mark.UI
-def test_create_segment(auto_main_page :Main_page ):
+def test_create_segment(auto_main_page :Main_page):
     segment_page = auto_main_page.go_to_segment()
     segment_name = f'test_create_segment{time.time()}'
     segment_page.Create_segment(segment_name)
     assert segment_page.find_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
     segment_page.Remove_segment(segment_name)
+
+@pytest.mark.skip('SKIP')
+@pytest.mark.UI
+def test_remove_segment(auto_main_page :Main_page):
+    segment_page = auto_main_page.go_to_segment()
+    segment_name = f'test_remove_segment{time.time()}'
+    segment_page.Create_segment(segment_name)
+    segment_page.Remove_segment(segment_name)
+    assert segment_page.check_invisibility_of_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
 
 #@pytest.mark.skip('SKIP')
 #@pytest.mark.UI
