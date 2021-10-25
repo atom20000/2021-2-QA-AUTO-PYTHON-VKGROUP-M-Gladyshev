@@ -20,7 +20,7 @@ class Segment_page(Main_page):
     def Remove_segment(self,name_segment):
         segment = self.find_elem((self.locators.TEMPLATE_NAME_SEGMENT[0],self.locators.TEMPLATE_NAME_SEGMENT[1].format(name_segment)))
         if segment:
-            #import pdb; pdb.set_trace()
-            segment.find_element(*self.locators.REMOVE_BUTTON).click() # Удаляет первый элемент, починить, должен относительно этого элемента найти крестик, но не находит, починить
+            segment = segment.get_attribute("href")
+            self.click_elem((self.locators.REMOVE_BUTTON[0], self.locators.REMOVE_BUTTON[1].format(segment[segment.rfind("/")+1:])))
             self.click_elem(self.locators.POP_UP_REMOVE_BUTTON)
-        pass
+            
