@@ -50,6 +50,9 @@ class Base_page():
         else:
             self.click_elem(locator_hide_button)
             self.click_elem(locator)
+
+    def check_invisibility_of_elem(self,locator, timeout=None):
+        return self.wait_elem(timeout).until(EC.invisibility_of_element_located(locator))
 #
     ##Фикстура по входу на сайт
     #@pytest.fixture(scope='function')
