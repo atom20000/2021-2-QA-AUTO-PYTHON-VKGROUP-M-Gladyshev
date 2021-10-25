@@ -35,7 +35,7 @@ class SegmentsPageLocators(MainPageLocators):
     ADD_SEGMENT_BUTTON = (By.XPATH, f'//div[contains(@class, "adding-segments-modal__footer")]{CREATE_SEGMENT_BUTTON[1]}')
     LAST_PAGE_CREATE_BUTTON = (By.XPATH, f'//div[contains(@class, "create-button-wrap")]{CREATE_SEGMENT_BUTTON[1]}')
     TEMPLATE_NAME_SEGMENT =(By.XPATH, '//a[contains(@title, "{}")]')
-    REMOVE_BUTTON = (By.XPATH, '//span[contains(@class, "icon-cross")]')
+    REMOVE_BUTTON = (By.XPATH, '//div[contains(@data-test, "remove-{}")]//span[contains(@class, "icon-cross")]')
     POP_UP_REMOVE_BUTTON = (By.XPATH, '//button[contains(@class, "button_confirm-remove")]')
 
 #Локаторы для выхода из системы
