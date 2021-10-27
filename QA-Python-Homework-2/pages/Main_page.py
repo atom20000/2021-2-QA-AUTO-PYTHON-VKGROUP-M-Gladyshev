@@ -14,3 +14,4 @@ class Main_page(Base_page):
         self.click_elem(self.locators.DASHBOARD_BUTTON)
         from pages.Dashboard_page import Dashboard_page
         return Dashboard_page(driver=self.driver)
+        

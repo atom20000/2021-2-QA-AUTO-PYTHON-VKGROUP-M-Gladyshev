@@ -40,7 +40,19 @@ class SegmentsPageLocators(MainPageLocators):
     POP_UP_REMOVE_BUTTON = (By.XPATH, '//button[contains(@class, "button_confirm-remove")]')
 
 class DashboardPageLocators(MainPageLocators):
-    pass
+    FIRST_PAGE_CREATE_BUTTON = (By.XPATH, '//a[contains(@href,"/campaign/new")]')
+    CHOICE_TRAFFIC_BUTTON = (By.XPATH, '//div[contains(@class,"column-list-item _traffic")]')
+    FIELD_LINK = (By.XPATH, '//input[contains(@data-gtm-id, "ad_url_text")]')
+    FIELD_NAME_COMPANY = (By.XPATH, '//div[contains(@class, "nput__wrap")]//input[contains(@class, "input__inp") and not(@data-test)]')
+    FORMAT_BANNER_ADVERTISEMENT = (By.XPATH, '//div[contains(@data-id, "patterns_banner")]')  
+    IMAGE_UPLOAD = (By.XPATH, '//input[contains(@type,"file")and contains(@data-test, "image")]') #_240x400
+    SAVE_IMAGE = (By.XPATH, '//input[contains(@class, "image-cropper")]')
+    BUTTON_SAVE_ADVERTISEMENT = (By.XPATH, '//div[contains(@data-test, "submit_banner_button" )]')
+    BUTTON_SAVE_COMPANY = (By.XPATH, '//button[contains(@data-class-name, "c")]')
+    LAST_PAGE_CREATE_BUTTON = (By.XPATH, '//div[contains(@class, "dashboard-module-createButtonWrap")]//div[contains(@data-test,"button")]')
+    TENPLATE_NAME_COMPANY = (By.XPATH, '//a[contains(@title, "{}")]')
+    SETTINGS_BUTTON = (By.XPATH, '//div[contains(@data-test, "setting-{}")]//div[contains(@class, "icon-settings")]')
+    REMOVE_BUTTON = (By.XPATH, '//li[contains(@data-test, "3") or contains(@title, "удалить")]')
 
 #Локаторы для выхода из системы
 class LogOut_Form(BasicLocators):
