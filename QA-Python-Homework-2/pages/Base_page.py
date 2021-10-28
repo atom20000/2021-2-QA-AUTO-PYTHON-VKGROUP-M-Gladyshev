@@ -1,8 +1,9 @@
+from numpy import False_
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException, TimeoutException
 from locators.All_locators import BasicLocators
-import pytest
+import time
 
 
 class Base_page():
@@ -13,6 +14,14 @@ class Base_page():
 
     def __init__(self,driver):
         self.driver=driver
+        self.is_opened()
+
+    def is_opened(self,timeout=10):
+        start = time.time()
+        while time.time()-start <timeout:
+            if self.driver.current_url.find(self.url) != -1:
+                return True
+        raise 
 
     #Функция создания экземпляра WebDriverWait
     def wait_elem(self,timeout=None):
@@ -38,10 +47,14 @@ class Base_page():
                 if i==self.RETRY_CLICK-1: raise
 
     #Функция по отправлению данных в поля ввода
-    def send_key(self,locator,key,timeout=None):
+    def send_key(self, locator, key,timeout=None):
         elem = self.find_elem(locator,timeout)
-        elem.clear()
-        elem.send_keys(key)
+        if self.wait_elem(timeout).until(EC.visibility_of(elem)):
+            if elem.get_attribute('type') == 'text':
+                elem.clear()
+                #elem.send_keys('\u0008'*len(elem.get_attribute('value')))
+            #elem.clear()
+            elem.send_keys(key)
 
     #Функция по проверке, что кнопка не скрыта в меню (Если окно маленького размера)
     def check_button_not_hidden(self,locator,locator_hide_button):
