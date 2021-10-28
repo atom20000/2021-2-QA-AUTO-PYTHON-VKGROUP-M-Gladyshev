@@ -2,6 +2,9 @@ from pages.Main_page import Main_page
 from locators.All_locators import DashboardPageLocators
 import numpy
 from PIL import Image
+from utils.decorators import wait
+import time
+import os
 
 class Dashboard_page(Main_page):
 
@@ -16,12 +19,22 @@ class Dashboard_page(Main_page):
         #else: return False # Подумай еще раз а надо ли оно тебе
         self.click_elem(self.locators.LAST_PAGE_CREATE_BUTTON) # Удалить починить If
         self.click_elem(self.locators.CHOICE_TRAFFIC_BUTTON)
-        self.send_key(self.locators.FIELD_LINK, 'mail.ru')
+        time.sleep(2)
+        self.send_key(self.locators.FIELD_LINK, 'https://mail.ru/')
+        time.sleep(2)
         self.send_key(self.locators.FIELD_NAME_COMPANY, name_company)
         self.click_elem(self.locators.FORMAT_BANNER_ADVERTISEMENT)
         #self.Generation_Image.save(name_company)
-        self.send_key(self.locators.IMAGE_UPLOAD,'maxresdefault.jpg')
+        self.driver.execute_script('arguments[0].style.display = "block";' , self.find_elem(self.locators.IMAGE_UPLOAD))
+        time.sleep(2)
+
+        print(os.path.abspath('maxresdefault.png'))
+        time.sleep(2)
+        import pdb; pdb.set_trace()
+        self.send_key(self.locators.IMAGE_UPLOAD, '/mnt/g/Репозитории/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/maxresdefault.png')
+        time.sleep(2)
         self.click_elem(self.locators.SAVE_IMAGE)
+        time.sleep(2)
         self.click_elem(self.locators.BUTTON_SAVE_ADVERTISEMENT)
         self.click_elem(self.locators.BUTTON_SAVE_COMPANY)
 
