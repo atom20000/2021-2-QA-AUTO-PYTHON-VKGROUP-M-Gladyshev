@@ -43,10 +43,11 @@ def test_remove_segment(auto_main_page :Dashboard_page):
 
 #@pytest.mark.skip('SKIP')
 @pytest.mark.UI
-def test_create_company(auto_main_page :Dashboard_page):
+def test_create_company(photo_dir, auto_main_page :Dashboard_page):
     dashboard_page = auto_main_page
     company_name = f'test_create_company{time.time()}'
-    dashboard_page.Create_company(company_name)
+    dashboard_page.Create_company('https://mail.ru/', company_name, photo_dir)
+    assert dashboard_page.find_elem((dashboard_page.locators.TENPLATE_NAME_COMPANY[0],dashboard_page.locators.TENPLATE_NAME_COMPANY[1].format(company_name)))
     pass
 #@pytest.mark.skip('SKIP')
 #@pytest.mark.UI
