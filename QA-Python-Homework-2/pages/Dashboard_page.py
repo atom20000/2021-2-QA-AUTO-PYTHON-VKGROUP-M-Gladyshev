@@ -1,9 +1,6 @@
 from pages.Main_page import Main_page
 from locators.All_locators import DashboardPageLocators
-
-import numpy
-from PIL import Image
-import time
+from utils.Generation_Image import Generation_Image
 import os
 
 class Dashboard_page(Main_page):
@@ -14,31 +11,33 @@ class Dashboard_page(Main_page):
 
     
     def Create_company(self, url, name_company, photo_dir):
-        #if self.find_elem(self.locators.FIRST_PAGE_CREATE_BUTTON).is_displayed():
-        #    self.click_elem(self.locators.FIRST_PAGE_CREATE_BUTTON)
-        #elif self.find_elem(self.locators.LAST_PAGE_CREATE_BUTTON).is_displayed():
-        #    self.click_elem(self.locators.LAST_PAGE_CREATE_BUTTON)
-        #else: return False # Подумай еще раз а надо ли оно тебе
-        self.click_elem(self.locators.LAST_PAGE_CREATE_BUTTON) # Удалить починить If
+        if self.check_access_button_create(self.locators.FIRST_PAGE_CREATE_BUTTON, 3):
+            self.click_elem(self.locators.FIRST_PAGE_CREATE_BUTTON)
+        elif self.check_access_button_create(self.locators.LAST_PAGE_CREATE_BUTTON, 3):
+            self.click_elem(self.locators.LAST_PAGE_CREATE_BUTTON)
+        else: return False
         self.click_elem(self.locators.CHOICE_TRAFFIC_BUTTON)
-        time.sleep(2)
         self.send_key(self.locators.FIELD_LINK, url)
-        time.sleep(2)
         self.send_key(self.locators.FIELD_NAME_COMPANY, name_company)
         self.click_elem(self.locators.FORMAT_BANNER_ADVERTISEMENT)
         photo = os.path.join(photo_dir,f'{name_company}.png')
-        self.Generation_Image.save(photo)
+        Generation_Image().save(photo)
         self.driver.execute_script('arguments[0].style.display = "block";' , self.find_elem(self.locators.IMAGE_UPLOAD))
-        time.sleep(2)
-        #import pdb; pdb.set_trace()
         self.send_key(self.locators.IMAGE_UPLOAD, photo)
-        time.sleep(2)
-        #self.click_elem(self.locators.SAVE_IMAGE)
-        #time.sleep(2)
-        #import pdb; pdb.set_trace()
+        #if self.find_elem(self.locators.SAVE_IMAGE).is_displayed():
+        #    self.click_elem(self.locators.SAVE_IMAGE)
         self.click_elem(self.locators.BUTTON_SAVE_ADVERTISEMENT)
         self.click_elem(self.locators.BUTTON_SAVE_COMPANY)
 
-    @property
-    def Generation_Image(self):
-        return Image.fromarray((numpy.random.rand(400,240,3) * 255).astype('uint8')).convert('RGBA')
+    def Remove_company(self, name_company):
+        company = self.find_elem((self.locators.TEMPLATE_NAME_COMPANY[0], self.locators.TEMPLATE_NAME_COMPANY[1].format(name_company)))
+        if company:
+            company = company.get_attribute("href")
+            self.click_elem((self.locators.SETTINGS_BUTTON[0], self.locators.SETTINGS_BUTTON[1].format(company[company.rfind("/")+1:company.rfind("?")])))
+            self.click_elem(self.locators.REMOVE_BUTTON)
+        
+    def check_access_button_create(self,locator, timeout=None):
+        try:
+            self.find_elem(locator,timeout)
+            return True
+        except: return False
