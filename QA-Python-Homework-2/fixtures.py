@@ -36,14 +36,6 @@ def driver():
     yield browser
     browser.quit()
 
-@pytest.fixture(scope='session')
-def photo_dir():
-    photo_dir = os.path.join(os.getcwd(),'photo')
-    if os.path.exists(photo_dir):
-        shutil.rmtree(photo_dir)
-    os.mkdir(photo_dir)
-    return photo_dir
-
 # Переделать через менеджер драйвера
 def get_driver():
     browser = webdriver.Chrome(ChromeDriverManager(version='latest',log_level=logging.CRITICAL).install())
