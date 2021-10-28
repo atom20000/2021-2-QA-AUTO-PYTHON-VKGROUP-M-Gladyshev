@@ -3,6 +3,9 @@ from pages.Login_page import Login_page
 from locators.All_locators import StartPageLocators
 
 class Start_page(Base_page):
+
+    url = 'https://target.my.com/'
+    
     locators =StartPageLocators()
 
     def go_to_login(self):
