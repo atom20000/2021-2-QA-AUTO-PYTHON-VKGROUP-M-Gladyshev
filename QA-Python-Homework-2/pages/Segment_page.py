@@ -2,6 +2,9 @@ from pages.Main_page import Main_page
 from locators.All_locators import SegmentsPageLocators
 
 class Segment_page(Main_page):
+
+    url = 'https://target.my.com/segments/'
+
     locators = SegmentsPageLocators()
 
     def Create_segment(self,name_segment):
