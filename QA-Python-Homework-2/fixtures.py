@@ -5,6 +5,8 @@ from pages.Dashboard_page import Dashboard_page
 from Static_var import *
 import logging
 import pytest
+import os
+import shutil
 
 @pytest.fixture
 def start_page(driver):
@@ -35,8 +37,12 @@ def driver():
     browser.quit()
 
 @pytest.fixture(scope='session')
-def temp_dir():
-    pass
+def photo_dir():
+    photo_dir = os.path.join(os.getcwd(),'photo')
+    if os.path.exists(photo_dir):
+        shutil.rmtree(photo_dir)
+    os.mkdir(photo_dir)
+    return photo_dir
 
 # Переделать через менеджер драйвера
 def get_driver():
