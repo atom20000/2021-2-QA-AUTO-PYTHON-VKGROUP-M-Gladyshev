@@ -6,7 +6,7 @@ import time
 
 class TestClass(BaseCase):
     
-    @pytest.mark.skip('SKIP')
+    #@pytest.mark.skip('SKIP')
     @pytest.mark.UI
     def test_login_one(self):
         login_page = self.start_page.go_to_login()
@@ -14,7 +14,7 @@ class TestClass(BaseCase):
         assert wait(login_page.find_elem(login_page.locators.LOGIN_ERROR).is_displayed, check=True) #Можно сделать через встроенный wait
     #написать второй тест с переходом на страницу ошибки
     
-    @pytest.mark.skip('SKIP')
+    #@pytest.mark.skip('SKIP')
     @pytest.mark.UI
     def test_login_two(self):
         login_page = self.start_page.go_to_login()
@@ -23,7 +23,7 @@ class TestClass(BaseCase):
         assert page.find_elem(page.locators.MSG_ERROR_TITLE_LOGIN)
         assert page.find_elem(page.locators.MSG_ERROR_TEXT_LOGIN)
 
-@pytest.mark.skip('SKIP')
+#@pytest.mark.skip('SKIP')
 @pytest.mark.UI
 def test_create_segment(auto_main_page :Dashboard_page):
     segment_page = auto_main_page.go_to_segment()
@@ -32,7 +32,7 @@ def test_create_segment(auto_main_page :Dashboard_page):
     assert segment_page.find_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
     segment_page.Remove_segment(segment_name)
 
-@pytest.mark.skip('SKIP')
+#@pytest.mark.skip('SKIP')
 @pytest.mark.UI
 def test_remove_segment(auto_main_page :Dashboard_page):
     segment_page = auto_main_page.go_to_segment()
@@ -47,8 +47,8 @@ def test_create_company(photo_dir, auto_main_page :Dashboard_page):
     dashboard_page = auto_main_page
     company_name = f'test_create_company{time.time()}'
     dashboard_page.Create_company('https://mail.ru/', company_name, photo_dir)
-    assert dashboard_page.find_elem((dashboard_page.locators.TENPLATE_NAME_COMPANY[0],dashboard_page.locators.TENPLATE_NAME_COMPANY[1].format(company_name)))
-    pass
+    assert dashboard_page.find_elem((dashboard_page.locators.TEMPLATE_NAME_COMPANY[0],dashboard_page.locators.TEMPLATE_NAME_COMPANY[1].format(company_name)))
+    dashboard_page.Remove_company(company_name)
 #@pytest.mark.skip('SKIP')
 #@pytest.mark.UI
 #def test_aut_log(auto_main_page):
