@@ -48,7 +48,7 @@ class DashboardPageLocators(MainPageLocators):
     IMAGE_UPLOAD = (By.XPATH, '//input[contains(@type,"file")and contains(@data-test, "image")]') #_240x400
     SAVE_IMAGE = (By.XPATH, '//input[contains(@class, "image-cropper")]')
     BUTTON_SAVE_ADVERTISEMENT = (By.XPATH, '//div[contains(@data-test, "submit_banner_button" )]')
-    BUTTON_SAVE_COMPANY = (By.XPATH, '//button[contains(@data-class-name, "c")]')
+    BUTTON_SAVE_COMPANY = (By.XPATH, '//div[contains(@class, "footer__button")]//button[contains(@data-class-name, "Submit")]')
     LAST_PAGE_CREATE_BUTTON = (By.XPATH, '//div[contains(@class, "dashboard-module-createButtonWrap")]//div[contains(@data-test,"button")]')
     TENPLATE_NAME_COMPANY = (By.XPATH, '//a[contains(@title, "{}")]')
     SETTINGS_BUTTON = (By.XPATH, '//div[contains(@data-test, "setting-{}")]//div[contains(@class, "icon-settings")]')
