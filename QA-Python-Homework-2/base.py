@@ -1,19 +1,15 @@
 from _pytest.fixtures import FixtureRequest
-from pages.Base_page import Base_page
-import pytest
-from fixtures import get_driver
-from pages.Login_page import Login_page
 from pages.Start_page import Start_page
+import pytest
 
 class BaseCase():
 
     driver = None
 
     @pytest.fixture(scope='function', autouse=True)
-    def setup(self,driver, request: FixtureRequest):
+    def setup(self, driver, request: FixtureRequest):
 
         self.driver = driver
-        
         self.start_page : Start_page = request.getfixturevalue('start_page')
         
         #if self.authtorize:

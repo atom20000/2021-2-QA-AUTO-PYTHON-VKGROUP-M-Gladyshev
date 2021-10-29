@@ -5,8 +5,7 @@ from pages.Dashboard_page import Dashboard_page
 from Static_var import *
 import logging
 import pytest
-import os
-import shutil
+
 
 @pytest.fixture
 def start_page(driver):
@@ -19,6 +18,7 @@ def cookies_login():
     Start_page(browser).go_to_login().login(LOGIN_MYTARGET,PASSWORD_MYTARGET)
     cookies = browser.get_cookies()
     browser.quit()
+    
     return cookies
 
 @pytest.fixture(scope='function')
