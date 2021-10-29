@@ -1,9 +1,13 @@
+import logging
+from os import name
 from numpy import False_
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException, TimeoutException
 from locators.All_locators import BasicLocators
 import time
+import allure
+import logging
 
 
 class Base_page():
@@ -13,14 +17,17 @@ class Base_page():
     locators = BasicLocators()
 
     def __init__(self,driver):
-        self.driver=driver
+        self.driver = driver
+        self.logger = logging.getLogger('test')
         self.is_opened()
 
     def is_opened(self,timeout=10):
         start = time.time()
         while time.time()-start <timeout:
             if self.driver.current_url.find(self.url) != -1:
+                self.logger.info(f"Page:{self.url} is opened")
                 return True
+        self.logger.error(f"Page:{self.url} isn't opened")
         raise 
 
     #Функция создания экземпляра WebDriverWait
@@ -40,6 +47,7 @@ class Base_page():
                 elem = self.find_elem(locator,timeout)
                 elem = self.wait_elem(timeout).until(EC.element_to_be_clickable(locator))
                 elem.click()
+                self.logger.info(f'Click element by locator : {locator[1]}')
                 return
             except (StaleElementReferenceException,
              ElementClickInterceptedException, 
@@ -50,11 +58,11 @@ class Base_page():
     def send_key(self, locator, key,timeout=None):
         elem = self.find_elem(locator,timeout)
         if self.wait_elem(timeout).until(EC.visibility_of(elem)):
+            self.logger.info(f'Element is visible by locator: {locator[1]}')
             if elem.get_attribute('type') == 'text':
                 elem.clear()
-                #elem.send_keys('\u0008'*len(elem.get_attribute('value')))
-            #elem.clear()
             elem.send_keys(key)
+        else: self.logger.info(f'Element is invisible by locator: {locator[1]}')
 
     #Функция по проверке, что кнопка не скрыта в меню (Если окно маленького размера)
     def check_button_not_hidden(self,locator,locator_hide_button):
