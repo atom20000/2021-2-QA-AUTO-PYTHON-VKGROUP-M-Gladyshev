@@ -2,6 +2,7 @@ from pages.Main_page import Main_page
 from locators.All_locators import DashboardPageLocators
 from utils.Generation_Image import Generation_Image
 import os
+import allure
 
 class Dashboard_page(Main_page):
 
@@ -21,11 +22,10 @@ class Dashboard_page(Main_page):
         self.send_key(self.locators.FIELD_NAME_COMPANY, name_company)
         self.click_elem(self.locators.FORMAT_BANNER_ADVERTISEMENT)
         photo = os.path.join(photo_dir,f'{name_company}.png')
-        Generation_Image().save(photo)
+        with allure.step('Save generation image'):
+            Generation_Image().save(photo)
         self.driver.execute_script('arguments[0].style.display = "block";' , self.find_elem(self.locators.IMAGE_UPLOAD))
         self.send_key(self.locators.IMAGE_UPLOAD, photo)
-        #if self.find_elem(self.locators.SAVE_IMAGE).is_displayed():
-        #    self.click_elem(self.locators.SAVE_IMAGE)
         self.click_elem(self.locators.BUTTON_SAVE_ADVERTISEMENT)
         self.click_elem(self.locators.BUTTON_SAVE_COMPANY)
 
@@ -38,6 +38,7 @@ class Dashboard_page(Main_page):
         
     def check_access_button_create(self,locator, timeout=None):
         try:
-            self.find_elem(locator,timeout)
-            return True
+            if self.find_elem(locator,timeout):
+                if self.find_elem(locator,timeout).is_displayed():
+                    return True
         except: return False

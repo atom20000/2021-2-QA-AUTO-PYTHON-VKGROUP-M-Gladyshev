@@ -27,7 +27,7 @@ class Base_page():
             if self.driver.current_url.find(self.url) != -1:
                 self.logger.info(f"Page:{self.url} is opened")
                 return True
-        self.logger.error(f"Page:{self.url} isn't opened")
+        self.logger.warning(f"Page:{self.url} isn't opened")
         raise 
 
     #Функция создания экземпляра WebDriverWait
@@ -38,8 +38,12 @@ class Base_page():
     #Функция по поиску элемента на странице
     def find_elem(self, locator, timeout=None):
         self.wait_elem(timeout).until(EC.invisibility_of_element_located(self.locators.SPINER))
-        return self.wait_elem(timeout).until(EC.presence_of_element_located(locator))
-    
+        try:
+            elem = self.wait_elem(timeout).until(EC.presence_of_element_located(locator))
+            self.logger.info(f'Element found by locator : {locator[1]}')
+            return elem
+        except:
+            self.logger.warning(f'Element not found by locator : {locator[1]}')
     #Функция по нажатию на элемент
     def click_elem(self, locator, timeout=None):
         for i in range(self.RETRY_CLICK):
@@ -52,7 +56,9 @@ class Base_page():
             except (StaleElementReferenceException,
              ElementClickInterceptedException, 
              ElementNotInteractableException,):
-                if i==self.RETRY_CLICK-1: raise
+                if i==self.RETRY_CLICK-1: 
+                    self.logger.warning(f'Not Click element by locator : {locator[1]};\n {Exception}')
+                    raise
 
     #Функция по отправлению данных в поля ввода
     def send_key(self, locator, key,timeout=None):
@@ -62,7 +68,8 @@ class Base_page():
             if elem.get_attribute('type') == 'text':
                 elem.clear()
             elem.send_keys(key)
-        else: self.logger.info(f'Element is invisible by locator: {locator[1]}')
+            self.logger.info("Send keys element by locator: {locator[1]}")
+        else: self.logger.warning(f'Element is invisible by locator: {locator[1]}')
 
     #Функция по проверке, что кнопка не скрыта в меню (Если окно маленького размера)
     def check_button_not_hidden(self,locator,locator_hide_button):
