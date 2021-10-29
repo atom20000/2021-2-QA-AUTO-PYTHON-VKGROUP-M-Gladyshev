@@ -23,7 +23,7 @@ class Base_page():
 
     def is_opened(self,timeout=10):
         start = time.time()
-        while time.time()-start <timeout:
+        while time.time()-start < timeout:
             if self.driver.current_url.find(self.url) != -1:
                 self.logger.info(f"Page:{self.url} is opened")
                 return True

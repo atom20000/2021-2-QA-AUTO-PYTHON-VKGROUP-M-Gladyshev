@@ -11,9 +11,10 @@ class Login_page(Base_page):
     locators = LoginPageLocators()
 
     def login(self, user, passwd):
-        self.send_key(self.locators.LOG_IN_FORM, user)
-        self.send_key(self.locators.PWD_FORM, passwd)
-        self.click_elem(self.locators.LOG_IN_BUTTON)
+        with allure.step("Logining....."):
+            self.send_key(self.locators.LOG_IN_FORM, user)
+            self.send_key(self.locators.PWD_FORM, passwd)
+            self.click_elem(self.locators.LOG_IN_BUTTON)
         if self.driver.current_url == self.url:
             with allure.step('Remained on the same page'):
                 return Login_page(self.driver)
