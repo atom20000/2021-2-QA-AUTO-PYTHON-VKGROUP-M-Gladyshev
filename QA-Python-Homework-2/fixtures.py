@@ -5,7 +5,7 @@ from pages.Dashboard_page import Dashboard_page
 from Static_var import *
 import logging
 import pytest
-
+import allure
 
 @pytest.fixture
 def start_page(driver):
@@ -26,15 +26,18 @@ def auto_main_page(cookies_login, driver):
     for cookie in cookies_login:
         driver.add_cookie(cookie)
     driver.refresh()
-    return Dashboard_page(driver=driver)
+    with allure.step('Cookies added'):
+        return Dashboard_page(driver=driver)
 
 #Фикстура по созданию экземпляра драйвера
 @pytest.fixture(scope='function')
 def driver():
     browser = get_driver()
     browser.get('https://target.my.com/')
-    yield browser
-    browser.quit()
+    with allure.step('Create driver'):
+        yield browser
+    with allure.step('Quite driver'):
+        browser.quit()
 
 # Переделать через менеджер драйвера
 def get_driver():
