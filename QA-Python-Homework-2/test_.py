@@ -26,43 +26,43 @@ class TestClass(BaseCase):
     def test_login_two(self, temp_dir,logger):
         login_page = self.start_page.go_to_login()
         page = login_page.login('54534342','gdfhjg')
-        assert self.driver.current_url.find('https://account.my.com/login/') !=-1
+        assert self.driver.current_url.find('https://account.my.com/login/') ==-1 #!!!!!!!!!!!!!!!!!!!!!
         assert page.find_elem(page.locators.MSG_ERROR_TITLE_LOGIN)
         assert page.find_elem(page.locators.MSG_ERROR_TEXT_LOGIN)
 
-@pytest.mark.skip('SKIP')
+#@pytest.mark.skip('SKIP')
 @allure.epic('Awesome PyTest framework')
 @allure.feature('UI tests')
 @allure.story('Segment tests')
 @allure.testcase('Create segment test')
 @pytest.mark.UI
-def test_create_segment(auto_main_page :Dashboard_page):
+def test_create_segment(temp_dir, logger, auto_main_page :Dashboard_page):
     segment_page = auto_main_page.go_to_segment()
     segment_name = f'test_create_segment{time.time()}'
     segment_page.Create_segment(segment_name)
     assert segment_page.find_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
     segment_page.Remove_segment(segment_name)
 
-@pytest.mark.skip('SKIP')
+#@pytest.mark.skip('SKIP')
 @allure.epic('Awesome PyTest framework')
 @allure.feature('UI tests')
 @allure.story('Segment tests')
 @allure.testcase('Remove segment test')
 @pytest.mark.UI
-def test_remove_segment(auto_main_page :Dashboard_page):
+def test_remove_segment(temp_dir, logger, auto_main_page :Dashboard_page):
     segment_page = auto_main_page.go_to_segment()
     segment_name = f'test_remove_segment{time.time()}'
     segment_page.Create_segment(segment_name)
     segment_page.Remove_segment(segment_name)
     assert segment_page.check_invisibility_of_elem((segment_page.locators.TEMPLATE_NAME_SEGMENT[0],segment_page.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)))
 
-@pytest.mark.skip('SKIP')
+#@pytest.mark.skip('SKIP')
 @allure.epic('Awesome PyTest framework')
 @allure.feature('UI tests')
 @allure.story('Company tests')
 @allure.testcase('Create company test')
 @pytest.mark.UI
-def test_create_company(photo_dir, auto_main_page :Dashboard_page):
+def test_create_company(temp_dir, logger, photo_dir, auto_main_page :Dashboard_page):
     dashboard_page = auto_main_page
     company_name = f'test_create_company{time.time()}'
     dashboard_page.Create_company('https://mail.ru/', company_name, photo_dir)
