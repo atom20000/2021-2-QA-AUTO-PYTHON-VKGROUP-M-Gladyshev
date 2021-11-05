@@ -15,7 +15,7 @@ class API_client():
         param = {
             'lang':'ru',
             'nosavelogin':0
-            }
+        }
         headers = {
             'Content-Type':'application/x-www-form-urlencoded', 
             'Referer': 'https://target.my.com/'
@@ -27,7 +27,7 @@ class API_client():
             'failure':'https://account.my.com/login/'
         }
         response = self.session.request('POST', url,params=param, headers=headers, data=data)
-        self.csrf_token = [c for c in self.session.request('GET', urljoin('https://target.my.com/','csrf')).headers['Set-Cookie'].split(';') if 'csrftoken'][0].split('=')[-1]#,headers={'Referer': 'https://target.my.com/auth/mycom?state=target_login=1'})s
+        self.csrf_token = [c for c in self.session.request('GET', urljoin(self.url,'csrf')).headers['Set-Cookie'].split(';') if 'csrftoken'][0].split('=')[-1]
         return response
 
     def get_segment(self, Id_segment=None,Sort_param=None):
