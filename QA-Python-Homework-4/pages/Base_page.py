@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException
+from appium.webdriver.common.touch_action import TouchAction
 from locators.All_locators import BasicLocators
 
 class Base_page():
@@ -40,3 +41,19 @@ class Base_page():
         if elem.get_attribute('type') == 'text':
             elem.clear()
         elem.send_keys(key)
+    
+    def scroll_element_left(self, locator, right_x):
+        element = self.find_elem(locator)
+        left_x = element.location['x']
+        middle_y = (element.location['y']*2 + element.rect['height']) / 2
+        action = TouchAction(self.driver)
+        action. \
+            press(x=right_x, y=middle_y). \
+            wait(ms=200). \
+            move_to(x=left_x, y=middle_y). \
+            release(). \
+            perform()
+    def scroll_carousel_by_element_to_left(self,locator_carousel,locator_elem,right_x):
+        while len(self.driver.find_elements(*locator_elem)) == 0:
+            self.scroll_element_left(locator_carousel,right_x)
+#int(self.driver.get_window_size()['wigth']/2)
