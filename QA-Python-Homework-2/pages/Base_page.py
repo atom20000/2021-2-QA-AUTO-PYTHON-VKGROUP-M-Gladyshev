@@ -81,16 +81,3 @@ class Base_page():
 
     def check_invisibility_of_elem(self,locator, timeout=None):
         return self.wait_elem(timeout).until(EC.invisibility_of_element_located(locator))
-#
-    ##Фикстура по входу на сайт
-    #@pytest.fixture(scope='function')
-    #def login(self,set_log_pwd):
-    #    self.check_button_not_hidden(Main_page.LOG_IN_BUTTON, Main_page.OTHER_CORNER_BUTTON)
-    #    self.send_key(LogIn_Form.LOG_IN_FORM,set_log_pwd['LOGIN'])
-    #    self.send_key(LogIn_Form.PWD_FORM,set_log_pwd['PWD'])
-    #    self.click_elem(LogIn_Form.LOG_IN_BUTTON)
-    #
-    ##Функция по выходу с сайта
-    #def logout(self):
-    #    self.click_elem(LogOut_Form.BUTTON_RIGHT_MODULE)
-    #    self.click_elem(LogOut_Form.BUTTON_LOG_OUT)
