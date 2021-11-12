@@ -1,17 +1,17 @@
-from pages.Main_page import Main_page
-from locators.All_locators import DashboardPageLocators
+from pages.main_page import MainPage
+from locators.all_locators import DashboardPageLocators
 from utils.Generation_Image import Generation_Image
 import os
 import allure
 
-class Dashboard_page(Main_page):
+class DashboardPage(MainPage):
 
     url = 'https://target.my.com/dashboard'
 
     locators = DashboardPageLocators()
 
     
-    def Create_company(self, url, name_company, photo_dir):
+    def Create_campaign(self, url, name_company, photo_dir):
         with allure.step('Company creating...'):
             if self.check_access_button_create(self.locators.FIRST_PAGE_CREATE_BUTTON, 3):
                 self.click_elem(self.locators.FIRST_PAGE_CREATE_BUTTON)
@@ -30,7 +30,7 @@ class Dashboard_page(Main_page):
             self.click_elem(self.locators.BUTTON_SAVE_ADVERTISEMENT)
             self.click_elem(self.locators.BUTTON_SAVE_COMPANY)
 
-    def Remove_company(self, name_company):
+    def Remove_campaign(self, name_company):
         with allure.step('Company removing...'):
             company = self.find_elem((self.locators.TEMPLATE_NAME_COMPANY[0], self.locators.TEMPLATE_NAME_COMPANY[1].format(name_company)))
             if company:
@@ -44,3 +44,7 @@ class Dashboard_page(Main_page):
                 if self.find_elem(locator,timeout).is_displayed():
                     return True
         except: return False
+
+    def Check_exist_campaign(self, campaign_name, timeout=None):
+        return self.find_elem((self.locators.TEMPLATE_NAME_COMPANY[0],self.locators.TEMPLATE_NAME_COMPANY[1].format(campaign_name)),timeout)
+        

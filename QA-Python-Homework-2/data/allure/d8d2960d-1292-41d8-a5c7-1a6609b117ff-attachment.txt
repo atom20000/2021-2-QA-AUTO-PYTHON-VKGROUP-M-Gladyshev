@@ -1,0 +1,1 @@
+2021-11-12 12:51:30,219 - base_page.py - WARNING - Page:https://target.my.com/dashboard isn't opened

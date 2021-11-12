@@ -1,0 +1,6 @@
+[WDM] - 
+
+[WDM] - ====== WebDriver manager ======
+[WDM] - Current google-chrome version is 94.0.4606
+[WDM] - Get LATEST driver version for 94.0.4606
+[WDM] - Driver [/home/atom/.wdm/drivers/chromedriver/linux64/94.0.4606.113/chromedriver] found in cache

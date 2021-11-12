@@ -1,8 +1,9 @@
-from pages.Main_page import Main_page
-from locators.All_locators import SegmentsPageLocators
+from numpy import True_
+from pages.main_page import MainPage
+from locators.all_locators import SegmentsPageLocators
 import allure
 
-class Segment_page(Main_page):
+class SegmentPage(MainPage):
 
     url = 'https://target.my.com/segments/'
 
@@ -28,3 +29,9 @@ class Segment_page(Main_page):
                 segment = segment.get_attribute("href")
                 self.click_elem((self.locators.REMOVE_BUTTON[0], self.locators.REMOVE_BUTTON[1].format(segment[segment.rfind("/")+1:])))
                 self.click_elem(self.locators.POP_UP_REMOVE_BUTTON)
+
+    def Check_exist_segment(self,segment_name,exist=True,timeout=None):
+        if exist:
+            return self.find_elem((self.locators.TEMPLATE_NAME_SEGMENT[0],self.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)),timeout)
+        else:
+            return self.check_invisibility_of_elem((self.locators.TEMPLATE_NAME_SEGMENT[0],self.locators.TEMPLATE_NAME_SEGMENT[1].format(segment_name)),timeout)

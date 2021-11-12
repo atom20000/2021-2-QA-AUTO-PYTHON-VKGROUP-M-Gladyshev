@@ -1,9 +1,9 @@
-from pages.Base_page import Base_page
-from pages.Login_page import Login_page
-from locators.All_locators import StartPageLocators
+from pages.base_page import BasePage
+from pages.login_page import LoginPage
+from locators.all_locators import StartPageLocators
 import allure
 
-class Start_page(Base_page):
+class StartPage(BasePage):
 
     url = 'https://target.my.com/'
     
@@ -12,4 +12,4 @@ class Start_page(Base_page):
     def go_to_login(self):
         self.check_button_not_hidden(self.locators.LOG_IN_BUTTON_MAIN, self.locators.OTHER_CORNER_BUTTON)
         with allure.step('Go to login page'):
-            return Login_page(driver=self.driver)
+            return LoginPage(driver=self.driver)

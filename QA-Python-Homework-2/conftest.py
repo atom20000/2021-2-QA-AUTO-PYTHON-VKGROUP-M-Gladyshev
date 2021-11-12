@@ -13,9 +13,6 @@ def photo_dir(temp_dir):
 
 def pytest_configure(config):
     root_path = os.path.abspath(os.path.join(os.getcwd(),'data'))
-    #for attr in dir(config):
-    #    if not attr.startswith('_'):  # Если не внутренний и не служебный
-    #        print(getattr(config, attr))
     if not hasattr(config, 'workerinput'):
         if os.path.exists(root_path):
             shutil.rmtree(root_path)

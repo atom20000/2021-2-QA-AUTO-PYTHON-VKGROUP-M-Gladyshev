@@ -1,5 +1,5 @@
 from _pytest.fixtures import FixtureRequest
-from pages.Start_page import Start_page
+from pages.start_page import StartPage
 import pytest
 
 class BaseCase():
@@ -10,5 +10,5 @@ class BaseCase():
     def setup(self, driver,logger, request: FixtureRequest):
 
         self.driver = driver
-        self.start_page : Start_page = request.getfixturevalue('start_page')
+        self.start_page : StartPage = request.getfixturevalue('start_page')
         

@@ -1,0 +1,15 @@
+2021-11-12 12:51:10,485 - base_page.py - INFO - Page:https://target.my.com/ is opened
+2021-11-12 12:51:11,765 - base_page.py - INFO - Element found by locator : //div[contains(@class, "responseHead-module-button")]
+2021-11-12 12:51:12,072 - base_page.py - INFO - Element found by locator : //div[contains(@class, "responseHead-module-button")]
+2021-11-12 12:51:12,443 - base_page.py - INFO - Click element by locator : //div[contains(@class, "responseHead-module-button")]
+2021-11-12 12:51:13,057 - base_page.py - INFO - Page:https://target.my.com/ is opened
+2021-11-12 12:51:13,109 - base_page.py - INFO - Element found by locator : //input[@name="email"]
+2021-11-12 12:51:13,124 - base_page.py - INFO - Element is visible by locator: //input[@name="email"]
+2021-11-12 12:51:13,437 - base_page.py - INFO - Send keys element by locator: {locator[1]}
+2021-11-12 12:51:13,481 - base_page.py - INFO - Element found by locator : //input[@name="password"]
+2021-11-12 12:51:13,502 - base_page.py - INFO - Element is visible by locator: //input[@name="password"]
+2021-11-12 12:51:13,673 - base_page.py - INFO - Send keys element by locator: {locator[1]}
+2021-11-12 12:51:13,720 - base_page.py - INFO - Element found by locator : //div[contains(@class,"authForm-module-button")]
+2021-11-12 12:51:13,872 - base_page.py - INFO - Click element by locator : //div[contains(@class,"authForm-module-button")]
+2021-11-12 12:51:13,942 - base_page.py - INFO - Page:https://target.my.com/ is opened
+2021-11-12 12:51:13,993 - base_page.py - INFO - Element found by locator : //div[contains(@class, "notify-module-content")]

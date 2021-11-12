@@ -1,10 +1,10 @@
-from pages.Base_page import Base_page
-from locators.All_locators import LoginPageLocators
-from pages.Dashboard_page import Dashboard_page
-from pages.Account_my_page import Account_my_page
+from pages.base_page import BasePage
+from locators.all_locators import LoginPageLocators
+from pages.dashboard_page import DashboardPage
+from pages.account_my_page import AccountMyPage
 import allure
 
-class Login_page(Base_page):
+class LoginPage(BasePage):
 
     url = 'https://target.my.com/'
 
@@ -17,10 +17,10 @@ class Login_page(Base_page):
             self.click_elem(self.locators.LOG_IN_BUTTON)
         if self.driver.current_url == self.url:
             with allure.step('Remained on the same page'):
-                return Login_page(self.driver)
-        elif self.driver.current_url.find(Dashboard_page.url) !=-1:
+                return LoginPage(self.driver)
+        elif self.driver.current_url.find(DashboardPage.url) !=-1:
             with allure.step('Go to dashboard page'):
-                return Dashboard_page(self.driver)
-        elif self.driver.current_url.find(Account_my_page.url) !=-1:
+                return DashboardPage(self.driver)
+        elif self.driver.current_url.find(AccountMyPage.url) !=-1:
             with allure.step('Go to account.my page'):
-                return Account_my_page(self.driver)
+                return AccountMyPage(self.driver)

@@ -1,16 +1,12 @@
 import logging
-from os import name
-from numpy import False_
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException, TimeoutException
-from locators.All_locators import BasicLocators
+from locators.all_locators import BasicLocators
 import time
-import allure
-import logging
 
 
-class Base_page():
+class BasePage():
 
     RETRY_CLICK = 4
 
@@ -44,6 +40,7 @@ class Base_page():
             return elem
         except:
             self.logger.warning(f'Element not found by locator : {locator[1]}')
+            return False
     #Функция по нажатию на элемент
     def click_elem(self, locator, timeout=None):
         for i in range(self.RETRY_CLICK):
@@ -55,7 +52,8 @@ class Base_page():
                 return
             except (StaleElementReferenceException,
              ElementClickInterceptedException, 
-             ElementNotInteractableException,):
+             ElementNotInteractableException,
+             TimeoutException):
                 if i==self.RETRY_CLICK-1: 
                     self.logger.warning(f'Not Click element by locator : {locator[1]};\n {Exception}')
                     raise
