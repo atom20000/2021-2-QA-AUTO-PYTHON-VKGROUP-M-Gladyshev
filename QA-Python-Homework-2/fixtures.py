@@ -6,6 +6,7 @@ from Static_var import *
 import logging
 import pytest
 import allure
+import faker
 
 @pytest.fixture
 def start_page(driver):
@@ -45,3 +46,6 @@ def get_driver():
     browser.maximize_window()
     return browser
 
+@pytest.fixture(scope='function')
+def segment_name():
+    return faker.Faker().bothify(text='test_??##?? ?????####')

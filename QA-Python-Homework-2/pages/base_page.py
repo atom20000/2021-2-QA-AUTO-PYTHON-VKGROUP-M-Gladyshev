@@ -26,12 +26,10 @@ class BasePage():
         self.logger.warning(f"Page:{self.url} isn't opened")
         raise 
 
-    #Функция создания экземпляра WebDriverWait
     def wait_elem(self,timeout=None):
         if timeout is None: timeout=10
         return WebDriverWait(self.driver,timeout)
 
-    #Функция по поиску элемента на странице
     def find_elem(self, locator, timeout=None):
         self.wait_elem(timeout).until(EC.invisibility_of_element_located(self.locators.SPINER))
         try:
@@ -41,7 +39,7 @@ class BasePage():
         except:
             self.logger.warning(f'Element not found by locator : {locator[1]}')
             return False
-    #Функция по нажатию на элемент
+
     def click_elem(self, locator, timeout=None):
         for i in range(self.RETRY_CLICK):
             try:
@@ -58,7 +56,6 @@ class BasePage():
                     self.logger.warning(f'Not Click element by locator : {locator[1]};\n {Exception}')
                     raise
 
-    #Функция по отправлению данных в поля ввода
     def send_key(self, locator, key,timeout=None):
         elem = self.find_elem(locator,timeout)
         if self.wait_elem(timeout).until(EC.visibility_of(elem)):
@@ -69,7 +66,6 @@ class BasePage():
             self.logger.info("Send keys element by locator: {locator[1]}")
         else: self.logger.warning(f'Element is invisible by locator: {locator[1]}')
 
-    #Функция по проверке, что кнопка не скрыта в меню (Если окно маленького размера)
     def check_button_not_hidden(self,locator,locator_hide_button):
         if self.find_elem(locator).is_displayed():
             self.click_elem(locator)

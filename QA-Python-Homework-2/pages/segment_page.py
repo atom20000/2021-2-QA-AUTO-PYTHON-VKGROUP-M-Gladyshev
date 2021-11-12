@@ -15,7 +15,7 @@ class SegmentPage(MainPage):
                 self.click_elem(self.locators.FIRST_PAGE_CREATE_BUTTON)
             elif self.find_elem(self.locators.LAST_PAGE_CREATE_BUTTON).is_displayed():
                 self.click_elem(self.locators.LAST_PAGE_CREATE_BUTTON)
-            else: return False # Подумай еще раз 
+            else: return False 
             self.click_elem(self.locators.CHOICE_VARIANT_SEGMENT)
             self.click_elem(self.locators.CHECKBOX_BUTTON)
             self.click_elem(self.locators.ADD_SEGMENT_BUTTON)
