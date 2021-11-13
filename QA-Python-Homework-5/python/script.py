@@ -66,7 +66,8 @@ def main():
                 'Топ 5 пользователей по количеству запросов, которые завершились серверной (5ХХ) ошибкой':[
                     {i[0]:i[1]} for i in list_log.filter_list('status_code', r'5\d\d').mapped_list('ip_client').ex_count().sorted_list(lambda x : -x[1])[:5]
                 ]
-            }, ensure_ascii=False))
+            }, ensure_ascii=False, indent=4))
+            
 if __name__=='__main__':
     main()
 #print(len(list_log)) #Общее число запросов
@@ -78,7 +79,6 @@ if __name__=='__main__':
 #print(list_log.filter_list('status_code',r'4\d\d').sorted_list(lambda x: -int(x.size_response))[:5])# по размеру
 
 #print(list_log.filter_list('status_code', r'5\d\d').mapped_list('ip_client').ex_count().sorted_list(lambda x : -x[1])[:5])
-
 
 #print(list(set(list(map(lambda x: x.type_request, list_log)))))
 #print(list(set(list(map(lambda x : list_log.index(x) if x.type_request == 'g369g=%40eval%01%28base64_decode%28%24_POST%5Bz0%5D%29%29%3B&z0=QGluaV9zZXQoImRpc3BsYXlfZXJyb3JzIiwiMCIpO0BzZXRfdGltZV9saW1pdCgwKTtAc2V0X21hZ2ljX3F1b3Rlc19ydW50aW1lKDApO2VjaG8oIi0%2bfCIpOztlY2hvKCJlNTBiNWYyYjRmNjc1NGFmMDljYzg0NWI4YjU4ZTA3NiIpOztlY2hvKCJ8PC0iKTs7ZGllKCk7GET'else 0 , list_log))))[1])
