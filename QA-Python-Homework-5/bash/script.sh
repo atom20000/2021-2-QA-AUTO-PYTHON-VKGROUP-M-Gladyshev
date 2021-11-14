@@ -17,6 +17,12 @@ do
     shift
 done
 
+if [ ! -f "$file" ]
+    then
+        echo "$file: No such file or directory"
+        exit
+fi
+
 if [ ! -d "./output" ]
     then
         mkdir ./output/
