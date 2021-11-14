@@ -18,7 +18,7 @@ def main():
         print('Input file not exist')
         return
 
-    output_dir =os.path.abspath(os.path.join(os.path.dirname(__file__),'..','output'))
+    output_dir =os.path.abspath(os.path.join('.','output'))
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
