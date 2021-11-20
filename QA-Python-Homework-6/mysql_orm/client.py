@@ -1,6 +1,7 @@
-import sqlalchemy
 from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy.inspection import inspect
+from models.models import *
+import sqlalchemy
 
 class MySQLORMClient():
 
@@ -16,7 +17,7 @@ class MySQLORMClient():
         url = f'mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/{db}'
         self.engine = sqlalchemy.create_engine(url, encoding='utf-8')
         self.connection = self.engine.connect()
-        self.session = sessionmaker(bind=self.connection.engine)
+        self.session = sessionmaker(bind=self.connection.engine)()
 
     def recreate_db(self):
         self.connect(created_db=False)
@@ -31,8 +32,18 @@ class MySQLORMClient():
         if fetch:
             return result.fetchall()
 
-    def insert_rows(self):
-        pass
+    def create_table(self,name_table):
+        if not inspect(self.engine).has_table(name_table):
+            Base.metadata.tables[name_table].create(self.engine)
 
-    def insert_row(self):
-        pass
+    def insert_rows(self,insert_values):
+        for ins_va in insert_values:
+            self.insert_row(ins_va)
+
+    def insert_row(self,insert_value):
+        self.session.add(insert_value)
+        self.session.commit()
+
+    def select_all_rows(self,entities):
+        self.session.commit()
+        return self.session.query(entities).all()
