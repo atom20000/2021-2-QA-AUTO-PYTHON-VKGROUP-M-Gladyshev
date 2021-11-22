@@ -25,7 +25,7 @@ def access_log():
                 list_log.append(StructLog(list_oblog))
         return list_log
     else:
-       raise NotImplementedError('Дописать ошибку')
+       raise NotImplementedError('Файл не найден')
 
 @pytest.fixture(scope='session')
 def mysql_orm_client(request):
