@@ -29,7 +29,7 @@ class CountRequestByType(Base):
         return all([getattr(self,i) == getattr(other,i) for i in ['Type','Count']])
 
     def __repr__(self):
-        return f'<{self.__tablename__}>\nCountRequestByType\n{self.Type}-{self.Count}\n'
+        return f'<{self.__tablename__}>\nCountRequestByType\n{self.Type}-{self.Count}\n{"-"*10}\n'
 
 class CountRequestByUrl(Base):
     __tablename__ = 'CountRequestByUrl'
@@ -74,22 +74,3 @@ class CountRequestByIpWithError500(Base):
 
     def __repr__(self):
         return f'<{self.__tablename__}>\nCountRequestByIpWithError500\n{self.Ip}\n{self.Count}\n{"-"*10}\n'
-
-
-
-#class TwoColumnTableMetaclass(DeclarativeMeta):
-#    __abstract__ = True
-#    __tableargs__ = {'mysql_charset':'utf8'}
-# # column_one,column_two,table_name
-#    def __new__(cls, name, bases, **kwargs):
-#        dct = dict([('__tablename__',kwargs['table_name']),(kwargs['column_one'], Column(String, primary_key=True)), (kwargs['column_two'], Column(Integer))])
-#        return super(TwoColumnTableMetaclass,cls).__new__(cls, name, bases, **dct)
-#
-#
-#class test(Base, metaclass=TwoColumnTableMetaclass, fhjs='sfd'):
-#    #meta_attrs = {'table_name':'test','column_one':'hfhf','column_two':'fdifdg'}
-#    #__tablename__ = 'test'
-#    #Base,metaclass=TwoColumnTableMetaclass('test',(Base,), {'table_name':'test','column_one':'hfhf','column_two':'fdifdg'})
-#    #__metaclass__ = TwoColumnTableMetaclass('test',(object,), {'table_name':'test','column_one':'hfhf','column_two':'fdifdg'})
-#    #column_one = Column(String, primary_key=True)
-#    pass
