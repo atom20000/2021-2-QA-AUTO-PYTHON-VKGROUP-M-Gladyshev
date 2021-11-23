@@ -1,16 +1,16 @@
-from pages.Base_page import Base_page
-from locators.All_locators import MainPagewithkeyboardLocators
+from pages.base_page import BasePage
+from locators.all_locators import MainPagewithkeyboardLocators
 
-class Main_page_with_keyboard(Base_page):
+class MainPageWithKeyboard(BasePage):
 
     locators = MainPagewithkeyboardLocators()
 
-    def Open_voice_input(self):
+    def open_voice_input(self):
         self.click_elem(self.locators.BUTTON_INPUT_ACTION)
-        from pages.Main_page import Main_page
-        return Main_page(self.driver)
+        from pages.main_page import MainPage
+        return MainPage(self.driver)
     
-    def Send_text(self,text):
+    def send_text(self,text):
         self.send_key(self.locators.FIELD_SEARCH, text)
         self.click_elem(self.locators.BUTTON_SEND_TEXT)
         

@@ -1,7 +1,6 @@
 from appium.webdriver.common.mobileby import MobileBy
 
 class BasicLocators():
-    #BUSTTON_ALLOW_PERMISSIOM = (MobileBy.ID, 'com.android.packageinstaller:id/permission_allow_button')
     BLOCK_OF_RUSSIA = (MobileBy.ID, 'ru.mail.search.electroscope:id/item_dialog_fact_card_content_block')
     CAROUSEL_FACT = (MobileBy.ID, 'ru.mail.search.electroscope:id/suggests_list')
     BUTTON_POPULATION_RUSSIAN = (MobileBy.XPATH, '//android.widget.TextView[contains(@text,"население россии")]')

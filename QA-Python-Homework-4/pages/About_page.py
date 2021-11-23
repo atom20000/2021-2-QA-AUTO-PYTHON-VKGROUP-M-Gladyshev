@@ -1,7 +1,7 @@
-from locators.All_locators import AboutPageLocators
-from pages.Base_page import Base_page
+from locators.all_locators import AboutPageLocators
+from pages.base_page import BasePage
 
-class About_page(Base_page):
+class AboutPage(BasePage):
 
     locators = AboutPageLocators()
 

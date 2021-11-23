@@ -1,23 +1,23 @@
-from pages.Base_page import Base_page
-from locators.All_locators import SettingsPageLocators
-from pages.Source_news_page import Source_news_page
-from pages.About_page import About_page
-from pages.Main_page import Main_page
+from pages.base_page import BasePage
+from locators.all_locators import SettingsPageLocators
+from pages.source_news_page import SourceNewsPage
+from pages.about_page import AboutPage
+from pages.main_page import MainPage
 
-class Settings_page(Base_page):
+class SettingsPage(BasePage):
 
     locators = SettingsPageLocators()
 
-    def Go_to_Source_News(self):
+    def go_to_source_news(self):
         self.scroll_by_element(method=self.swipe_up, locator_elem=self.locators.BUTTON_SOURCE_NEWS)
         self.click_elem(self.locators.BUTTON_SOURCE_NEWS)
-        return Source_news_page(self.driver)
+        return SourceNewsPage(self.driver)
     
-    def Go_to_About(self):
+    def go_to_about(self):
         self.scroll_by_element(method=self.swipe_up, locator_elem=self.locators.BUTTON_ABOUT_APP)
         self.click_elem(self.locators.BUTTON_ABOUT_APP)
-        return About_page(self.driver)
+        return AboutPage(self.driver)
     
-    def Exit_Settings(self):
+    def exit_settings(self):
         self.click_elem(self.locators.EXIT_SETTINGS)
-        return Main_page(self.driver)
+        return MainPage(self.driver)

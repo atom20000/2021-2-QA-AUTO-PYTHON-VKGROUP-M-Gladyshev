@@ -1,11 +1,11 @@
 from appium import webdriver
-from Static_var import *
-from pages.Main_page import Main_page
+from static_var import *
+from pages.main_page import MainPage
 import pytest
 
 @pytest.fixture(scope='function')
 def main_page(driver):
-    return Main_page(driver)
+    return MainPage(driver)
 
 @pytest.fixture(scope='function')
 def driver():

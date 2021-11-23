@@ -2,9 +2,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException
 from appium.webdriver.common.touch_action import TouchAction
-from locators.All_locators import BasicLocators
+from locators.all_locators import BasicLocators
 
-class Base_page():
+class BasePage():
 
     RETRY_CLICK = 4
 
@@ -69,3 +69,14 @@ class Base_page():
             move_to(x=x, y=end_y). \
             release(). \
             perform()
+
+    def get_text_from_element(self,locator):
+        return self.find_elem(locator).get_attribute('text')
+
+    def wait_answer_from_command(self, locator,text, timeout=None):
+         while len(self.driver.find_elements(*locator)) == 0:
+            self.send_text(text)
+            try:
+               return self.find_elem(locator, timeout)
+            except:
+                pass
