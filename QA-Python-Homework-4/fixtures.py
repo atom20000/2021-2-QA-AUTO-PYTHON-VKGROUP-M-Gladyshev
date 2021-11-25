@@ -1,6 +1,6 @@
 from appium import webdriver
-from static_var import *
-from pages.main_page import MainPage
+from Static_var import *
+from pages.Main_page import MainPage
 import pytest
 
 @pytest.fixture(scope='function')

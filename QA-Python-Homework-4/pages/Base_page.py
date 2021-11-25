@@ -2,7 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException
 from appium.webdriver.common.touch_action import TouchAction
-from locators.all_locators import BasicLocators
+from locators.All_locators import BasicLocators
 
 class BasePage():
 

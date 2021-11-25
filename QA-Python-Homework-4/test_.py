@@ -1,4 +1,4 @@
-from static_var import *
+from Static_var import *
 from base import Basecase
 import pytest
 import re

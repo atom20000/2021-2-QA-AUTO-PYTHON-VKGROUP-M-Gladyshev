@@ -1,5 +1,5 @@
 from _pytest.fixtures import FixtureRequest
-from pages.main_page import MainPage
+from pages.Main_page import MainPage
 import pytest
 
 class Basecase():

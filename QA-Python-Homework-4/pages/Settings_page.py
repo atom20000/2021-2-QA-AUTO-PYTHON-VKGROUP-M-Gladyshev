@@ -1,8 +1,8 @@
-from pages.base_page import BasePage
-from locators.all_locators import SettingsPageLocators
-from pages.source_news_page import SourceNewsPage
-from pages.about_page import AboutPage
-from pages.main_page import MainPage
+from pages.Base_page import BasePage
+from locators.All_locators import SettingsPageLocators
+from pages.Source_news_page import SourceNewsPage
+from pages.About_page import AboutPage
+from pages.Main_page import MainPage
 
 class SettingsPage(BasePage):
 

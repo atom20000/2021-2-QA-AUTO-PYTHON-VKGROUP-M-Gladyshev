@@ -1,5 +1,5 @@
-from pages.base_page import BasePage
-from locators.all_locators import MainPagewithkeyboardLocators
+from pages.Base_page import BasePage
+from locators.All_locators import MainPagewithkeyboardLocators
 
 class MainPageWithKeyboard(BasePage):
 
@@ -7,7 +7,7 @@ class MainPageWithKeyboard(BasePage):
 
     def open_voice_input(self):
         self.click_elem(self.locators.BUTTON_INPUT_ACTION)
-        from pages.main_page import MainPage
+        from pages.Main_page import MainPage
         return MainPage(self.driver)
     
     def send_text(self,text):
