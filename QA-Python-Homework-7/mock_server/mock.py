@@ -3,33 +3,12 @@
 
 from flask import Flask, jsonify, request, Response
 from werkzeug.serving import WSGIRequestHandler
-import threading
-
-from flask.views import View
-from functools import partial, update_wrapper
-
 from settings import *
-
-class Glask(Flask):
-
-    def __init__(self, *args, **kwargs):
-        Flask.__init__(self, *args, **kwargs)
-    
-    def route(self, rule, **options):
-        apply_self = lambda f: update_wrapper(partial(f, self=None), f) 
-        decorator = Flask.route(self, rule, **options)    
-        return  lambda *args, **kwargs: decorator(apply_self(*args, **kwargs))
+import threading
 
 app = Flask('MockServer')
 
 SURNAME_DATA = {}
-
-#class MockServer():
-
-#def __init__(self, host, port):
-#    self.host = host
-#    self.port = port
-#    self.run_server
 
 @app.route('/get_user/<name>', methods=['GET'])
 def get_surname(name):
@@ -47,7 +26,7 @@ def put_surname(name):
             return jsonify(json['surname']), 200
         else:
             SURNAME_DATA[name] = json['surname']
-            return jsonify(json), 201
+            return jsonify({'name':name, 'surname':json['surname']}), 201
     return jsonify('Request body not passed'), 400
 
 @app.route('/delete_user/<name>', methods=['DELETE'])
@@ -60,16 +39,10 @@ def delete_record(name):
 
 @app.route('/post_user', methods=['POST'])
 def post_surname():
-    #import pdb; pdb.set_trace()
     if json := request.json:
         SURNAME_DATA[json['name']] = json['surname']
         return jsonify(json), 201
     return jsonify('Request body not passed'), 400
-
-#def shutdown_server():
-#    terminate_func = request.environ.get('werkzeug.server.shutdown')
-#    if terminate_func:
-#        terminate_func()
 
 @app.route('/shutdown')
 def shutdown():
