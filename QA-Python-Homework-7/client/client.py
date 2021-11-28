@@ -1,5 +1,5 @@
 import socket
-import json
+
 
 class SocketClient():
 
@@ -14,13 +14,10 @@ class SocketClient():
 
     def get_request(self, location):
         self.send_request(type='GET', location=location)
-        #self.client.send(f'GET {location} HTTP/1.1\r\nHOST:{self.host}\r\n\r\n'.encode()) #Connection: close можно вставить  загаловок и не вызывать socket.close()
-        return json.loads(self.get_recv()[-1])
+        return self.get_recv()
 
     def post_request(self, location, body):
         self.send_request(type='POST', location=location, body=body)
-        #self.connect(1000)
-        #self.client.send(f'POST {location} HTTP/1.1\r\nHOST:{self.host}\r\nContent-Type: application/json\r\nContent-Length: {str(len(body))}\r\n\r\n{body}'.encode())
         return self.get_recv()
     
     def put_request(self, location, body):
@@ -33,8 +30,8 @@ class SocketClient():
 
     def send_request(self,type,location,body=None):
         self.connect(0.1)
-        #import pdb; pdb.set_trace()
-        self.client.send((f'{type} {location} HTTP/1.1\r\nHOST:{self.host}\r\n' + ('\r\n' if body is None else f'Content-Type: application/json\r\nContent-Length: {str(len(body))}\r\n\r\n{body}')).encode())
+        self.client.send((f'{type} {location} HTTP/1.1\r\nHOST:{self.host}\r\n' 
+            + ('\r\n' if body is None else f'Content-Type: application/json\r\nContent-Length: {str(len(body))}\r\n\r\n{body}')).encode())
 
     def get_recv(self):
         total_data = []
