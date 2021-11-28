@@ -1,10 +1,64 @@
-from client.client import SocketClient
-from mock_server.mock import *
+from base import BaseCase
+from mock_server.mock import SURNAME_DATA
 import json
 
-def test_get_request(socket_client : SocketClient):
-    SURNAME_DATA['123'] = 'gshjd'
-    #import pdb; pdb.set_trace()
-    print(socket_client.get_request('/get_user/123'))
-    print(socket_client.post_request('/post_user',json.dumps({'name':'hooo','surname':'hjdfld'})))
-    print(SURNAME_DATA)
+
+class TestServer(BaseCase):
+
+    def test_get_user_success(self):
+        SURNAME_DATA[self.user_data['name']] = self.user_data['surname']
+        response = self.client.get_request(f'/get_user/{self.user_data["name"]}')
+        assert self.status_code_from_response(response) == 200
+        assert self.user_data['surname'] == self.body_from_response(response)
+        assert SURNAME_DATA[self.user_data['name']] == self.body_from_response(response)
+
+    def test_get_user_failed(self):
+        response = self.client.get_request(f'/get_user/{self.user_data["name"]}')
+        assert self.status_code_from_response(response) == 404
+        assert self.body_from_response(response) == f'Surname for user "{self.user_data["name"]}" not found'
+
+    def test_post_user_success(self):
+        response = self.client.post_request('/post_user',json.dumps(self.user_data))
+        assert self.status_code_from_response(response) == 201
+        assert self.body_from_response(response)['name'] in SURNAME_DATA
+        #Проверка равенства словаря
+        assert SURNAME_DATA[self.body_from_response(response)['name']] == self.body_from_response(response)['surname'] 
+
+    def test_post_user_failed(self):
+        response = self.client.post_request('/post_user',body=None)
+        assert self.status_code_from_response(response) == 400
+        assert self.body_from_response(response) == 'Request body not passed'
+
+    def test_put_user_success(self):
+        SURNAME_DATA[self.user_data['name']] = self.user_data['surname']
+        response = self.client.put_request(f'/put_user/{self.user_data["name"]}', json.dumps({'surname':'Galaktionov'}))
+        assert self.status_code_from_response(response) == 200
+        assert self.body_from_response(response) == 'Galaktionov'
+        assert SURNAME_DATA[self.user_data['name']] == self.body_from_response(response)
+    
+    def test_put_user_created(self):
+        response = self.client.put_request(f'/put_user/{self.user_data["name"]}', json.dumps({'surname':'Galaktionov'}))
+        assert self.status_code_from_response(response) == 201
+        assert self.body_from_response(response)['name'] in SURNAME_DATA
+        #Проверка равенства словаря
+        assert SURNAME_DATA[self.body_from_response(response)['name']] == self.body_from_response(response)['surname'] 
+
+    def test_put_user_failed(self):
+        SURNAME_DATA[self.user_data['name']] = self.user_data['surname']
+        response = self.client.put_request(f'/put_user/{self.user_data["name"]}',body=None)
+        assert self.status_code_from_response(response) == 400
+        assert self.body_from_response(response) == 'Request body not passed'
+    
+    def test_delete_user_success(self):
+        SURNAME_DATA[self.user_data['name']] = self.user_data['surname']
+        response = self.client.delete_request(f'/delete_user/{self.user_data["name"]}')
+        assert self.status_code_from_response(response) == 204
+        #import pdb; pdb.set_trace()
+        #assert self.body_from_response(response) == 'Successful deletion'
+        assert SURNAME_DATA.get(self.user_data['name']) is None
+    
+    def test_delete_user_failed(self):
+        response = self.client.delete_request(f'/delete_user/{self.user_data["name"]}')
+        assert self.status_code_from_response(response) == 404
+        assert self.body_from_response(response) == f'Surname for user "{self.user_data["name"]}" not found'
+        assert SURNAME_DATA.get(self.user_data['name']) is None
