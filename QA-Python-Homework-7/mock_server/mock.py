@@ -8,7 +8,6 @@ import threading
 from flask.views import View
 from functools import partial, update_wrapper
 
-from werkzeug.wrappers import response
 from settings import *
 
 class Glask(Flask):
@@ -34,23 +33,38 @@ SURNAME_DATA = {}
 
 @app.route('/get_user/<name>', methods=['GET'])
 def get_surname(name):
+    #import pdb; pdb.set_trace()
     if surname := SURNAME_DATA.get(name):
         return jsonify(surname), 200
     else:
         return jsonify(f'Surname for user "{name}" not found'), 404
 
-def put_text():
-    pass
+@app.route('/put_user/<name>', methods=['PUT'])
+def put_surname(name):
+    if json := request.json:
+        if SURNAME_DATA.get(name):
+            SURNAME_DATA[name] = json['surname']
+            return jsonify(json['surname']), 200
+        else:
+            SURNAME_DATA[name] = json['surname']
+            return jsonify(json), 201
+    return jsonify('Request body not passed'), 400
 
-def delete_text():
-    pass
+@app.route('/delete_user/<name>', methods=['DELETE'])
+def delete_record(name):
+    if SURNAME_DATA.get(name):
+        SURNAME_DATA.pop(name)
+        return jsonify('Successful deletion'), 204
+    else:
+        return jsonify(f'Surname for user "{name}" not found'), 404
 
 @app.route('/post_user', methods=['POST'])
 def post_surname():
-    if request.json:
-        SURNAME_DATA[request.json['name']] = request.json['surname']
-        return Response(status=201)
-    return Response(status=400)
+    #import pdb; pdb.set_trace()
+    if json := request.json:
+        SURNAME_DATA[json['name']] = json['surname']
+        return jsonify(json), 201
+    return jsonify('Request body not passed'), 400
 
 #def shutdown_server():
 #    terminate_func = request.environ.get('werkzeug.server.shutdown')
