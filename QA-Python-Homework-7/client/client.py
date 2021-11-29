@@ -41,7 +41,3 @@ class SocketClient():
         except:
             self.client.close()
         return ''.join(total_data).splitlines()
-
-
-
-
