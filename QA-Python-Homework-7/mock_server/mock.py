@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 
 
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request
 from werkzeug.serving import WSGIRequestHandler
 from settings import *
 import threading
+import logging
+import click
+
+
 
 app = Flask('MockServer')
-
 SURNAME_DATA = {}
 
 @app.route('/get_user/<name>', methods=['GET'])
 def get_surname(name):
-    #import pdb; pdb.set_trace()
     if surname := SURNAME_DATA.get(name):
         return jsonify(surname), 200
     else:
@@ -46,19 +48,37 @@ def post_surname():
 
 @app.route('/shutdown')
 def shutdown():
+    shutdown_mock()
+    return jsonify(f'Ok, exiting'), 200
+
+def shutdown_mock():
     terminate_func = request.environ.get('werkzeug.server.shutdown')
     if terminate_func:
         terminate_func()
-    return jsonify(f'Ok, exiting'), 200
 
 def run_server():
     WSGIRequestHandler.protocol_version = 'HTTP/1.1'
     threading.Thread(target=app.run, kwargs={
         'host':MOCK_HOST,
         'port':MOCK_PORT,
-        #'debug':True
     }).start()
 
+def flask_redirect_stderr(root):
+    logger = logging.getLogger('werkzeug')
+    logger.removeHandler(logging.StreamHandler())
+    handler = logging.FileHandler(root,'w')
+    handler.setFormatter(logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s"))
+    handler.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+
+def flask_redirect_stdout(root):
+    def echo(text, **args):
+        with open(root,'a') as f:
+            print(text, file=f)
+    def secho(text, **args):
+        echo(text)
+    click.echo = echo
+    click.secho = secho
 
 if __name__ == '__main__':
     app.run(
