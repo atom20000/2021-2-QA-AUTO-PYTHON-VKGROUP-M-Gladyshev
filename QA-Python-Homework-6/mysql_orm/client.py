@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
-from models.models import *
+from models.models import Base
 import sqlalchemy
 
 class MySQLORMClient():
