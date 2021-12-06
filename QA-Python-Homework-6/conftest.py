@@ -1,13 +1,13 @@
 from parser_log.struct_log import StructLog
 from parser_log.exlist import ExList
 from mysql_orm.client import MySQLORMClient
-from static_var import *
+from static_var import PATH_ACCESS_LOG_FILE, USER_NAME,USER_PASSWORD,DB_NAME,HOST,PORT
 import pytest
 import os
 
 
 def pytest_configure(config):
-    client = MySQLORMClient(user=USER_NAME,  password= USER_PASSWORD, db_name=DB_NAME, host=HOST, port=PORT)
+    client = MySQLORMClient(user=USER_NAME,  password=USER_PASSWORD, db_name=DB_NAME, host=HOST, port=PORT)
     if not hasattr(config, 'workerinput'):
         client.recreate_db()
     client.connect()
