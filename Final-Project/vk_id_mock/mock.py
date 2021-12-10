@@ -4,6 +4,7 @@
 from flask import Flask, jsonify
 from werkzeug.serving import WSGIRequestHandler
 import logging
+import os
 
 from werkzeug.wrappers import request
 
@@ -19,7 +20,7 @@ def get_id(username):
         return jsonify({}), 404
 
 @app.route('/vk_id/<username>', methods=['POST'])
-def set_id(username):
+def post_id(username):
     if json := request.json:
         if VK_ID_DATA.get(username):
             return jsonify('Already exists'), 400
@@ -48,4 +49,14 @@ def delete_id(username):
         return jsonify('Successful deletion'), 204
     else:
          return jsonify(f'ID for "{username}" not found'), 404
+    
+if __name__ == '__main__':
+    WSGIRequestHandler.protocol_version = 'HTTP/1.1'
+    app.run(
+        host=os.environ.get('HOST'),
+        port=os.environ.get('PORT')
+    )
+
+#Решить проблему завершения
+
          
