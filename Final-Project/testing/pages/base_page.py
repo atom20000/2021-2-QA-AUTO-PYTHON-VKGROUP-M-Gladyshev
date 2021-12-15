@@ -1,7 +1,8 @@
-import logging
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, StaleElementReferenceException, TimeoutException
+import logging
 import time
 
 
@@ -9,7 +10,8 @@ class BasePage():
 
     RETRY_CLICK = 4
 
-    def __init__(self,driver):
+    def __init__(self,driver, url):
+        self.url = url
         self.driver = driver
         self.logger = logging.getLogger('test')
         self.is_opened()
@@ -63,11 +65,14 @@ class BasePage():
             self.logger.info("Send keys element by locator: {locator[1]}")
         else: self.logger.warning(f'Element is invisible by locator: {locator[1]}')
 
-    def check_button_not_hidden(self,locator,locator_hide_button):
+    def action_chains(self):
+        return ActionChains(self.driver)
+
+    def check_button_not_hidden(self,locator,locator_hide_button=None):
         if self.find_elem(locator).is_displayed():
             self.click_elem(locator)
         else:
-            self.click_elem(locator_hide_button)
+            self.action_chains.move_to_element(self.find_elem(locator_hide_button)).perform()
             self.click_elem(locator)
 
     def check_invisibility_of_elem(self,locator, timeout=None):
