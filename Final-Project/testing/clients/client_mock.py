@@ -4,13 +4,13 @@ import json
 
 
 class MockClient():
-
-    url = 'Задуматься как получить url mock' 
-
-    headers ={
+    
+    def __init__(self, url):
+        self.url = url
+        self.headers = {
             'Content-Type': 'application/json'
         }
-    
+
     def request(self,method,username, data=None):
         return requests.request(method=method,url= urljoin(self.url,username),headers=self.headers,data=json.dumps(data))
 

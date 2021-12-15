@@ -4,10 +4,9 @@ import json
 
 
 class AppClient():
-
-    url = 'Задуматься как получить url app' 
-    
-    def __init__(self):
+      
+    def __init__(self, url):
+        self.url = url
         self.session = requests.Session()
     
 
