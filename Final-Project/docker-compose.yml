@@ -12,7 +12,7 @@ services:
     image: "mysql:5.7"
     
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/db_docker:/docker-entrypoint-initdb.d
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/db_docker:/docker-entrypoint-initdb.d
 
     healthcheck:
       test: ["CMD", "mysqladmin","-uroot","-ppass","ping","-h","127.0.0.1"]
@@ -30,8 +30,7 @@ services:
     image:  "myapp:latest"
 
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/app_docker:/tmp/conf
-    
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/app_docker:/tmp/conf
     entrypoint: /app/myapp --config=/tmp/conf/config
 
     ports:
@@ -40,5 +39,14 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+
+  selenoid:
+    image: "aerokube/selenoid"
+
+    volumes:
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/selenoid_docker/browser.json:/etc/selenoid
+      - /var/run/docker.sock:/var/run/docker/sock
+    
+    command: ["-conf", "/etc/selenoid/browser.json"]
 
 
