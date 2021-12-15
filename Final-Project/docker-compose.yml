@@ -44,9 +44,22 @@ services:
     image: "aerokube/selenoid"
 
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/selenoid_docker/browser.json:/etc/selenoid
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/selenoid_docker:/etc/selenoid
       - /var/run/docker.sock:/var/run/docker/sock
     
     command: ["-conf", "/etc/selenoid/browser.json"]
 
+  tests:
+    image: tests_do
+    tty: true
+    environment:
+      - MARK=SQL
+      - N=0
 
+    volumes:
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/testing:/tmp/testing
+      - $WORKSPACE/allure:/tmp/allure
+    entrypoint: /bin/bash /tmp/testing/start_tests.sh
+    depends_on:
+      QA_myapp:
+        condition: service_started
