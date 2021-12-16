@@ -1,6 +1,4 @@
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.inspection import inspect
-from sqlalchemy.sql.functions import user
 from models import TestUsers
 import sqlalchemy
 from faker import Faker
