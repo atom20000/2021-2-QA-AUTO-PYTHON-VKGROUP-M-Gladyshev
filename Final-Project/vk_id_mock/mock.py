@@ -3,7 +3,7 @@
 
 from flask import Flask, jsonify
 from werkzeug.serving import WSGIRequestHandler
-import logging
+import signal
 import os
 
 from werkzeug.wrappers import request
@@ -49,14 +49,24 @@ def delete_id(username):
         return jsonify('Successful deletion'), 204
     else:
          return jsonify(f'ID for "{username}" not found'), 404
-    
+
+class ServerTerminationError(Exception):
+    pass
+
+def exit_gracefully(signum,frame):
+    raise ServerTerminationError()
+
+signal.signal(signal.SIGINT, exit_gracefully)
+signal.signal(signal.SIGTERM, exit_gracefully)
+
 if __name__ == '__main__':
     WSGIRequestHandler.protocol_version = 'HTTP/1.1'
-    app.run(
-        host=os.environ.get('HOST'),
-        port=os.environ.get('PORT')
-    )
-
-#Решить проблему завершения
+    try:
+        app.run(
+            host=os.environ.get('HOST'),
+            port=os.environ.get('PORT')
+        )
+    except ServerTerminationError:
+        pass
 
          
