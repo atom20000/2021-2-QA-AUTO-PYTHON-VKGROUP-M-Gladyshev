@@ -18,4 +18,7 @@ class RegistrationPage(BasePage):
         self.click_elem(self.locators.SUBMIT_BUTTON)
         #А если не пройдет ? написать переход к логину и проверку
         return MainPage(driver=self.driver)
-
+        
+    @property
+    def error_message_text(self):
+        return self.find_elem(self.locators.ERROR_MESSAGE).text

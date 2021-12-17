@@ -24,3 +24,7 @@ class LoginPage(BasePage):
     def go_to_registration(self):
         self.click_elem(self.locators.CREATE_USER_BUTTON)
         return RegistrationPage(driver=self.driver)
+    
+    @property
+    def error_message_text(self):
+        return self.find_elem(self.locators.ERROR_MESSAGE).text
