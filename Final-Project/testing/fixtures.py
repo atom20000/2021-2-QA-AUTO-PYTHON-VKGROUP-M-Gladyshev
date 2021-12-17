@@ -8,7 +8,6 @@ from clients.client_mock import MockClient
 import logging
 import pytest
 import allure
-import faker
 
 
 @pytest.fixture
@@ -38,11 +37,9 @@ def auto_main_page(cookies_login, driver):
     with allure.step('Cookies added'):
         return MainPage(driver=driver)
 
-#Фикстура по созданию экземпляра драйвера
 @pytest.fixture(scope='function')
 def driver():
     browser = get_driver()
-    #проверить доступ к app
     browser.get('http://qa_myapp_proxy:8082/login')
     with allure.step('Create driver'):
         yield browser
