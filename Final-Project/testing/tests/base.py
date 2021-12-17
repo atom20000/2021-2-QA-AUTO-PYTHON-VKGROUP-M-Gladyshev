@@ -1,13 +1,20 @@
+import logging
 from _pytest.fixtures import FixtureRequest
 import pytest
 
 class BaseUITest():
 
+    autologin = True
+    
     @pytest.fixture(scope='function', autouse=True)
-    def setup(self,driver,request: FixtureRequest):
+    def setup(self, driver, logger, request: FixtureRequest):
         self.driver = driver
-        self.api_client = request.getfixturevalue('api_client')
+        self.logger = logger
         self.mock_client = request.getfixturevalue('mock_client')
         self.mysql_client = request.getfixturevalue('mysql_orm_client')
-        self.start_page = request.getfixturevalue('start_page')
+        if self.autologin:
+            self.start_page = request.getfixturevalue('auto_main_page')
+        else:
+            self.start_page = request.getfixturevalue('start_page')
         
+#self.api_client = request.getfixturevalue('api_client')
