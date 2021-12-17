@@ -15,7 +15,7 @@ class BasePage():
     def __init__(self,driver):
         self.driver = driver
         self.logger = logging.getLogger('test')
-        #self.is_opened()
+        self.is_opened()
 
     def is_opened(self,timeout=10):
         start = time.time()
