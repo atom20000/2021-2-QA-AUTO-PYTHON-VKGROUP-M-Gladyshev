@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker
-from models import TestUsers
+from clients.client_db.models import TestUsers
 import sqlalchemy
 from faker import Faker
 
@@ -56,3 +56,4 @@ class MySQLORMClient():
             active=active,
             start_active_time=start_active_time
             )
+            
