@@ -1,12 +1,11 @@
-from base_page import BasePage
+from pages.base_page import BasePage
 from locators.all_locators import MainPageLocators
 
 
 class MainPage(BasePage):
 
-    def __init__(self):
-        self.url = self.url+'/welcome/'
-        self.locators = MainPageLocators()
+    locators = MainPageLocators()
+    url = 'http://qa_myapp_proxy:8082/welcome/'
 
     def click_overlay(self,text_elem):
         self.click_elem((self.locators.OVERLAY_BUTTON[0],

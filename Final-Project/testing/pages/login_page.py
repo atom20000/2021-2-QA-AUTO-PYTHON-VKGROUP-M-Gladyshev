@@ -1,15 +1,15 @@
-from base_page import BasePage
-from main_page import MainPage
-from registration_page import RegistrationPage
+from pages.base_page import BasePage
+from pages.main_page import MainPage
+from pages.registration_page import RegistrationPage
 from locators.all_locators import LoginPageLocators
 
 
 
 class LoginPage(BasePage):
     
-    def __init__(self):
-        self.url = self.url+'/login'
-        self.locators = LoginPageLocators()
+    locators = LoginPageLocators()
+
+    url = 'http://qa_myapp_proxy:8082/login'
 
     def login(self, username, password):
         self.send_key(self.locators.USERNAME_FIELD, username)
@@ -19,6 +19,7 @@ class LoginPage(BasePage):
             return LoginPage(driver=self.driver)
         elif self.driver.current_url.find(MainPage.url) !=-1:
             return MainPage(driver=self.driver)
+        print(self.driver.current_url)
     
     def go_to_registration(self):
         self.click_elem(self.locators.CREATE_USER_BUTTON)

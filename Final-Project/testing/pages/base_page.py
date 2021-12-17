@@ -10,11 +10,12 @@ class BasePage():
 
     RETRY_CLICK = 4
 
-    def __init__(self,driver, url):
-        self.url = url
+    url = 'http://qa_myapp_proxy:8082'
+
+    def __init__(self,driver):
         self.driver = driver
         self.logger = logging.getLogger('test')
-        self.is_opened()
+        #self.is_opened()
 
     def is_opened(self,timeout=10):
         start = time.time()
@@ -30,7 +31,6 @@ class BasePage():
         return WebDriverWait(self.driver,timeout)
 
     def find_elem(self, locator, timeout=None):
-        self.wait_elem(timeout).until(EC.invisibility_of_element_located(self.locators.SPINER))
         try:
             elem = self.wait_elem(timeout).until(EC.presence_of_element_located(locator))
             self.logger.info(f'Element found by locator : {locator[1]}')
