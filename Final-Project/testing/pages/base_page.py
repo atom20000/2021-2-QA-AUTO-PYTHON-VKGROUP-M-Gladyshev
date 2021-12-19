@@ -37,7 +37,7 @@ class BasePage():
             return elem
         except:
             self.logger.warning(f'Element not found by locator : {locator[1]}')
-            return False
+            raise
 
     def click_elem(self, locator, timeout=None):
         for i in range(self.RETRY_CLICK):
@@ -65,6 +65,7 @@ class BasePage():
             self.logger.info("Send keys element by locator: {locator[1]}")
         else: self.logger.warning(f'Element is invisible by locator: {locator[1]}')
 
+    @property
     def action_chains(self):
         return ActionChains(self.driver)
 
@@ -75,5 +76,13 @@ class BasePage():
             self.action_chains.move_to_element(self.find_elem(locator_hide_button)).perform()
             self.click_elem(locator)
 
-    def check_invisibility_of_elem(self,locator, timeout=None):
-        return self.wait_elem(timeout).until(EC.invisibility_of_element_located(locator))
+    def check_visibility_of_elem(self,locator, timeout=None):
+        return self.wait_elem(timeout).until(EC.visibility_of_element_located(locator))
+
+    def change_window(self,windows):
+        try:
+            self.wait_elem().until(EC.new_window_is_opened(windows))
+            windows = self.driver.window_handles
+            self.driver.switch_to.window(windows[1])
+        except TimeoutException:
+            raise Exception("Page don't open separate window")
