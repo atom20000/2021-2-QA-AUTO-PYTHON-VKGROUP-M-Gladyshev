@@ -36,7 +36,7 @@ class MySQLORMClient():
 
     def select_user(self,username):
         self.session.commit()
-        return self.session.query(TestUsers).filter(TestUsers.username == username).all()
+        return self.session.query(TestUsers).filter(TestUsers.username == username).first()
 
     def generate_user(self, username=None, password=None, email=None, access=None, active=None, start_active_time=None):
         if username is None:

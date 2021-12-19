@@ -12,7 +12,7 @@ class MockClient():
         }
 
     def request(self,method,username, data=None):
-        return requests.request(method=method,url= urljoin(self.url,username),headers=self.headers,data=json.dumps(data))
+        return requests.request(method=method,url= urljoin(self.url,username),headers=self.headers,data=json.dumps(data)).json()
 
 
     #def get_id(self,username):
