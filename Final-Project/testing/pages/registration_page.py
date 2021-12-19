@@ -8,17 +8,24 @@ class RegistrationPage(BasePage):
     
     url = 'http://qa_myapp_proxy:8082/reg'
 
-    def registration(self, username, emal, password, repassword, agree=True):
+    def registration(self, username, email, password, repassword, agree=True):
         self.send_key(self.locators.USERNAME_FIELD, username)
-        self.send_key(self.locators.EMAIL_FIELD, emal)
+        self.send_key(self.locators.EMAIL_FIELD, email)
         self.send_key(self.locators.PASSWORD_FIELD, password)
         self.send_key(self.locators.REPASSWORD_FIELD, repassword)
         if agree:
             self.click_elem(self.locators.ACCEPT_CHEKBOX)
         self.click_elem(self.locators.SUBMIT_BUTTON)
-        #А если не пройдет ? написать переход к логину и проверку
-        return MainPage(driver=self.driver)
+        if self.driver.current_url == self.url:
+            return RegistrationPage(driver=self.driver)
+        elif self.driver.current_url.find(MainPage.url) !=-1:
+            return MainPage(driver=self.driver)
+
+    def go_to_login(self):
+        self.click_elem(self.locators.LOGIN_BUTTON)
+        from pages.login_page import LoginPage
+        return LoginPage(driver=self.driver)
         
     @property
     def error_message_text(self):
-        return self.find_elem(self.locators.ERROR_MESSAGE).text
+       return self.check_visibility_of_elem(self.locators.ERROR_MESSAGE).text
