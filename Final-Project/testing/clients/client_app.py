@@ -30,3 +30,32 @@ class AppClient():
     def get_request(self,url,headers=None,data=None):
         url = urljoin(self.url, url)
         return self.session.request('GET',url=url, headers=headers,data=data)
+
+    def login(self, username, password):
+        url = urljoin(self.url, 'login')
+        headers = {
+            'Content-Type':'application/x-www-form-urlencoded'
+        }
+        data = {
+            "username": username, 
+            "password": password, 
+            "submit": 'Login'
+        }
+        response = self.session.request('POST',url=url, headers=headers,data=data)
+        return response
+
+    def registration(self, username, email, password, repassword, term='y'):
+        url = urljoin(self.url, 'reg')
+        headers = {
+            'Content-Type':'application/x-www-form-urlencoded'
+        }
+        data = {
+            "username": username, 
+            "email": email,
+            "password": password, 
+            "confirm": repassword,
+            "term": term,
+            "submit": 'Register'
+        }
+        response = self.session.request('POST',url=url, headers=headers, data=data)
+        return response
