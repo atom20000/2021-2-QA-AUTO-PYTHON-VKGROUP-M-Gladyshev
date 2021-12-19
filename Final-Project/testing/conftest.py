@@ -17,7 +17,6 @@ def pytest_configure(config):
         if os.path.exists(root_path):
             shutil.rmtree(root_path)
         os.mkdir(root_path)
-        os.mkdir(os.path.join(root_path,'allure'))
     config.base_temp_dir = root_path
 
 
