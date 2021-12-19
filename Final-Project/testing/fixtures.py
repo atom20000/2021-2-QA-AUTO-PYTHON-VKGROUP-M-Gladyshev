@@ -23,7 +23,6 @@ def cookies_login(mysql_orm_client):
     LoginPage(browser).login(username=user.username, password=user.password)
     cookies = browser.get_cookies()
     browser.quit()
-    
     return cookies
 
 @pytest.fixture(scope='function')
@@ -65,6 +64,14 @@ def mysql_orm_client():
     client.connection.close()
 
 @pytest.fixture(scope='session')
+def auto_login_API(mysql_orm_client):
+    user = mysql_orm_client.generate_user()
+    mysql_orm_client.insert_row(user)
+    Api = AppClient('http://qa_myapp_proxy:8082')
+    Api.login(username=user.username,password=user.password)
+    return Api
+
+@pytest.fixture(scope='function')
 def api_client():
     return AppClient('http://qa_myapp_proxy:8082')
 
