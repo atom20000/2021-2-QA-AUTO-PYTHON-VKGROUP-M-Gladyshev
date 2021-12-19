@@ -1,6 +1,5 @@
 from pages.base_page import BasePage
 from pages.main_page import MainPage
-from pages.registration_page import RegistrationPage
 from locators.all_locators import LoginPageLocators
 
 
@@ -23,8 +22,9 @@ class LoginPage(BasePage):
     
     def go_to_registration(self):
         self.click_elem(self.locators.CREATE_USER_BUTTON)
+        from pages.registration_page import RegistrationPage
         return RegistrationPage(driver=self.driver)
     
     @property
     def error_message_text(self):
-        return self.find_elem(self.locators.ERROR_MESSAGE).text
+        return self.check_visibility_of_elem(self.locators.ERROR_MESSAGE).text
