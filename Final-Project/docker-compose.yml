@@ -83,10 +83,10 @@ services:
     stdin_open: true
     environment:
       - MARK=UI
-      - N=0
+      - N=4
     volumes:
       - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/testing:/tmp/testing
-      - $WORKSPACE/allure:/tmp/allure
+      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/data/allure:/tmp/allure
     entrypoint: /bin/bash /tmp/testing/start_tests.sh
     depends_on:
       qa_myapp_proxy:
