@@ -3,7 +3,7 @@ version: '2.1'
 networks:
   network_compose:
     external:
-      name: network_compose
+      name: ${NETWORK}
 
 services:
   mysql:
@@ -18,7 +18,7 @@ services:
     image: "mysql:5.7"
     
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/db_docker:/docker-entrypoint-initdb.d
+      - $WORKSPACE/config/db_docker:/docker-entrypoint-initdb.d
 
     healthcheck:
       test: ["CMD", "mysqladmin","-uroot","-ppass","ping","-h","127.0.0.1"]
@@ -42,7 +42,7 @@ services:
     image:  "myapp:latest"
 
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/app_docker:/tmp/conf
+      - $WORKSPACE/config/app_docker:/tmp/conf
     entrypoint: /app/myapp --config=/tmp/conf/config
 
     ports:
@@ -57,7 +57,7 @@ services:
       network_compose: null
     image: "nginx:stable"
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/proxy_conf/default.conf:/etc/nginx/conf.d/default.conf
+      - $WORKSPACE/config/proxy_conf/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       qa_myapp:
         condition: service_started
@@ -69,10 +69,10 @@ services:
     image: "aerokube/selenoid:latest"
 
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/config/selenoid_docker:/etc/selenoid
+      - $WORKSPACE/config/selenoid_docker:/etc/selenoid
       - /var/run/docker.sock:/var/run/docker.sock
     
-    command: ["-conf", "/etc/selenoid/browser.json", "-container-network", "network_compose"]
+    command: ["-conf", "/etc/selenoid/browser.json", "-container-network", "${NETWORK}"]
 
   tests:
     networks:
@@ -82,11 +82,11 @@ services:
     tty: true
     stdin_open: true
     environment:
-      - MARK=UI
-      - N=4
+      - MARK=${MARK}
+      - N=${WORKERS}
     volumes:
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/testing:/tmp/testing
-      - /home/atom/atom/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev/Final-Project/data/allure:/tmp/allure
+      - $WORKSPACE/testing:/tmp/testing
+      - $WORKSPACE/alluredir:/tmp/allure
     entrypoint: /bin/bash /tmp/testing/start_tests.sh
     depends_on:
       qa_myapp_proxy:
