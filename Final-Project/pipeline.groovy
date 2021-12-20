@@ -27,7 +27,7 @@ pipeline {
 
         stage("Start system and tests") {
             steps {
-                withEnv(["PATH+EXTRA=$PYTHON", "PATH+EXTRA=$DOCKER"]) {
+                withEnv(["NETWORK=$NETWORK"]) {
                     dir ("$WORKSPACE") {
                         sh "docker-compose up --abort-on-container-exit"
                     }
@@ -43,7 +43,7 @@ pipeline {
                 results: [[path: 'alluredir']]
             ])
             script {
-                withEnv(["PATH+EXTRA=$PYTHON", "PATH+EXTRA=$DOCKER"]) {
+                withEnv(["NETWORK=$NETWORK"]) {
                     dir("$WORKSPACE") {
                         sh 'docker-compose down'
                     }
