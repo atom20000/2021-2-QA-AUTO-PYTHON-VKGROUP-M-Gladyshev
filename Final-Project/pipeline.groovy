@@ -35,7 +35,7 @@ pipeline {
                         }
                     } catch(Exception e){
                         error "Stage interrupted with ${e.toString()}"
-                        sh "exit 1"
+                        
                     }
                 }
                 
