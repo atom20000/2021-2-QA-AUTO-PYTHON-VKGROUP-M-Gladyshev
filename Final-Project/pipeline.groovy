@@ -33,24 +33,36 @@ pipeline {
                                 sh "docker-compose up --abort-on-container-exit"
                             }
                         }
-                    } catch(Exception e){
+                    } 
+                    catch(Exception e){
                         error "Stage interrupted with ${e.toString()}"
                         
+                    }
+                    finally {
+                        withEnv(["NETWORK=$NETWORK"]) {
+                            dir("Final-Project") {
+                                sh "docker network rm $NETWORK"
+                            }
+                        }
+                        allure([
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: '$WORKSPACE/alluredir']]
+                        ])
                     }
                 }
                 
             }
         }
 
-        stage("Remove nemwork and stop docker-compose"){
-            steps {
-                withEnv(["NETWORK=$NETWORK"]) {
-                    dir("Final-Project") {
-                        sh "docker network rm $NETWORK"
-                    }
-                }
-            }
-        }
+        //stage("Remove nemwork and stop docker-compose"){
+        //    steps {
+        //        withEnv(["NETWORK=$NETWORK"]) {
+        //            dir("Final-Project") {
+        //                sh "docker network rm $NETWORK"
+        //            }
+        //        }
+        //    }
+        //}
 
         //stage("Allure"){
         //    steps{
@@ -65,11 +77,11 @@ pipeline {
     }
 
     post {
-        always {
-            allure([
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: 'alluredir']]
-            ])
+        //always {
+        //    allure([
+        //            reportBuildPolicy: 'ALWAYS',
+        //            results: [[path: 'alluredir']]
+        //    ])
             cleanWs() 
         }
     }
