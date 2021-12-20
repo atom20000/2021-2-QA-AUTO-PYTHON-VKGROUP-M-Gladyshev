@@ -484,7 +484,7 @@ class TestAPI(BaseAPITest):
         4. Проверка статуса ответа
         5. Проверка статуса пользователя в БД
         """
-
+    @pytest.mark.Bug
     @pytest.mark.positive
     def test_find_me_js_api(self):
         """
