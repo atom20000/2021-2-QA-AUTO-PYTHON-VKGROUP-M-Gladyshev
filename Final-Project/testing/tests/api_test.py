@@ -16,13 +16,13 @@ class TestLoginAPI(BaseAPITest):
         3. Авторизация пользователя 
         4. Проверка статуса ответа
 
-        Ожидаемый результат - статус код ответа 200
+        Ожидаемый результат - статус код ответа 302
         """
         user = self.mysql_client.generate_user()
         self.mysql_client.insert_row(user)
         response = self.api_client.login(username=user.username, password=user.password)
         with allure.step('Check that the status code and active'):
-            assert response.status_code == 200
+            assert response.status_code == 302
             assert self.mysql_client.select_user(username=user.username).active == 1
 
     @pytest.mark.negative
@@ -493,7 +493,7 @@ class TestAPI(BaseAPITest):
         2. Проверить ответ
         Ожидаемый результат: статус код 200
         """
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'/static/scripts/findMeError.js',
             headers=None,
             data=None
