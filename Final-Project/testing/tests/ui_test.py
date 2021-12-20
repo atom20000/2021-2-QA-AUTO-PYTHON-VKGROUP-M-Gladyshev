@@ -1,6 +1,7 @@
 from tests.base import BaseUITest
 from pages.main_page import MainPage
 import pytest
+import allure
 
 @pytest.mark.UI
 class TestLoginPage(BaseUITest):
@@ -22,7 +23,8 @@ class TestLoginPage(BaseUITest):
         self.mysql_client.insert_row(user)
         main_page = self.start_page.login(username=user.username, password=user.password)
         self.logger.info('Check cross main page')
-        assert main_page.url == self.driver.current_url
+        with allure.step('Check that the url'):
+            assert main_page.url == self.driver.current_url
 
 
     @pytest.mark.negative
@@ -45,9 +47,11 @@ class TestLoginPage(BaseUITest):
         """
         user = self.mysql_client.generate_user(username=username)
         self.start_page.login(username=user.username, password=user.password)
-        assert self.start_page.error_message_text == error_message
+        with allure.step('Check that the error message'):
+            assert self.start_page.error_message_text == error_message
         self.logger.info(f'Check message error "{error_message}"')
-        assert self.start_page.url == self.driver.current_url
+        with allure.step('Check that the url'):
+            assert self.start_page.url == self.driver.current_url
 
     @pytest.mark.positive
     def test_go_to_registration(self):
@@ -59,7 +63,8 @@ class TestLoginPage(BaseUITest):
         Ожидаем результат - текущийй url страницы соответствует адресу страницы регистрации
         """
         registration_page = self.start_page.go_to_registration()
-        assert registration_page.url == self.driver.current_url
+        with allure.step('Check that the url'):
+            assert registration_page.url == self.driver.current_url
 
 @pytest.mark.UI
 class TestRegistrationPage(BaseUITest):
@@ -84,8 +89,10 @@ class TestRegistrationPage(BaseUITest):
             email=user.email, 
             password=user.password, 
             repassword=user.password)
-        assert main_page.url == self.driver.current_url
-        assert self.mysql_client.select_user(user.username)
+        with allure.step('Check that the url'):
+            assert main_page.url == self.driver.current_url
+        with allure.step('Check that the user db'):
+            assert self.mysql_client.select_user(user.username)
 
     @pytest.mark.Bug
     @pytest.mark.negative
@@ -100,8 +107,10 @@ class TestRegistrationPage(BaseUITest):
         Ожидаемый результат - текущая url драйвера соответствует url главной страницы
         """
         page = self._registration(username='багбаг')
-        assert page.error_message_text == 'Internal Server Error'
-        assert MainPage.url == self.driver.current_url
+        with allure.step('Check that the error message'):
+            assert page.error_message_text == 'Internal Server Error'
+        with allure.step('Check that the url'):
+            assert MainPage.url == self.driver.current_url
 
     @pytest.mark.negative
     @pytest.mark.parametrize(

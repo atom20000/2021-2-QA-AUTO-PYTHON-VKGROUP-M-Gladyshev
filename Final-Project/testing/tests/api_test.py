@@ -360,8 +360,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 200
-        assert self.mysql_client.select_user(username=user.username).access == 0
+        with allure.step('Check that the status code and access'):
+            assert response.status_code == 200
+            assert self.mysql_client.select_user(username=user.username).access == 0
 
     @pytest.mark.negative
     def test_block_non_exist_user(self):
@@ -380,8 +381,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 404
-        assert len(self.mysql_client.select_user(username=user.username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 404
+            assert len(self.mysql_client.select_user(username=user.username)) == 0
 
     @pytest.mark.negative
     def test_block_blocked_user(self):
@@ -402,8 +404,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 304
-        assert self.mysql_client.select_user(username=user.username).access == 0
+        with allure.step('Check that the status code and access'):
+            assert response.status_code == 304
+            assert self.mysql_client.select_user(username=user.username).access == 0
 
     @pytest.mark.positive
     def test_accept_user(self):
@@ -424,8 +427,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 200
-        assert self.mysql_client.select_user(username=user.username).access == 1
+        with allure.step('Check that the status code and access'):
+            assert response.status_code == 200
+            assert self.mysql_client.select_user(username=user.username).access == 1
 
     @pytest.mark.negative
     def test_accept_non_exist_user(self):
@@ -466,8 +470,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 304
-        assert self.mysql_client.select_user(username=user.username).access == 1
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 304
+            assert self.mysql_client.select_user(username=user.username).access == 1
 
     @pytest.mark.positive
     def test_logout(self):
@@ -493,4 +498,5 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 200
+        with allure.step('Check that the status code'):
+            assert response.status_code == 200
