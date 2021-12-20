@@ -39,13 +39,15 @@ pipeline {
         always {
             allure([
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'alluredir']]
+                results: [[path: '$WORKSPACE/alluredir']]
             ])
             script {
                 withEnv(["NETWORK=$NETWORK"]) {
                     dir("Final-Project") {
                         sh 'docker-compose down'
+                        sh "docker network rm $NETWORK"
                     }
+
                 }
             }
             cleanWs()
