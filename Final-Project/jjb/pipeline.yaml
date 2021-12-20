@@ -1,0 +1,17 @@
+- job:
+    name: test-qa-pipeline
+    description: "JJB Project, Pipeline\n"
+    project-type: pipeline
+
+    pipeline-scm:
+      scm:
+        - QA-scm
+      script-path: "pipeline.groovy"
+
+    wrappers:
+      - timestamps
+      - workspace-cleanup
+
+    triggers:
+      - pollscm:
+          cron: '* * * * *'
