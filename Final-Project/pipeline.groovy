@@ -18,7 +18,7 @@ pipeline {
         stage("Create docker-compose network") {
             steps {
                 echo 'Start'
-                sh "docker network inspect $NETWORK >/dev/null"
+                //sh "docker network inspect $NETWORK >/dev/null"
                 sh "docker network create $NETWORK"
                 echo 'Network created'
             }
