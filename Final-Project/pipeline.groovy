@@ -41,13 +41,13 @@ pipeline {
         }
 
         stage("Remove nemwork and stop docker-compose"){
-            script {
+            steps {
                 withEnv(["NETWORK=$NETWORK"]) {
                     dir("Final-Project") {
                         sh 'docker-compose down -v'
                         sh "docker network rm $NETWORK"
                     }
-            
+                }
             }
         }
 
