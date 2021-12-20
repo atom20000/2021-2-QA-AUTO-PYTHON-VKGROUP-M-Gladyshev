@@ -26,15 +26,17 @@ pipeline {
 
         stage("Start system and tests") {
             steps {
-                try{
-                    withEnv(["NETWORK=$NETWORK"]) {
-                        dir ("Final-Project") {
-                            sh "docker-compose up "
+                script{
+                    try{
+                        withEnv(["NETWORK=$NETWORK"]) {
+                            dir ("Final-Project") {
+                                sh "docker-compose up "
+                            }
                         }
+                    } catch(Exception e){
+                        error "Stage interrupted with ${e.toString()}"
+                        sh "exit 1"
                     }
-                } catch(Exception e){
-                    error "Stage interrupted with ${e.toString()}"
-                    sh "exit 1"
                 }
                 
             }
