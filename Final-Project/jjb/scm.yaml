@@ -3,7 +3,7 @@
     scm:
       - git:
           url: git@github.com:atom20000/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev.git
-          credentials-id: "jenkins-user-for-private-test-github-repo"
+          credentials-id: "be2ab2dc-5119-4e87-a456-e3cbb356af7f"
           basedir: ./Final-Project
           branches:
             - QA-Python-Final-Project
