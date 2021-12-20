@@ -46,7 +46,7 @@ pipeline {
                         }
                         allure([
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: '$WORKSPACE/allure-resualts']]
+                            results: [[path: '$WORKSPACE/allure-results']]
                         ])
                     }
                 }
