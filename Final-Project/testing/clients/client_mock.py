@@ -6,7 +6,7 @@ import json
 class MockClient():
     
     def __init__(self, url):
-        self.url = url
+        self.url = urljoin(url,'vk_id')
         self.headers = {
             'Content-Type': 'application/json'
         }
