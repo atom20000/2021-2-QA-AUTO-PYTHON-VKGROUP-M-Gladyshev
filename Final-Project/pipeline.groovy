@@ -77,7 +77,7 @@ pipeline {
     }
 
     post {
-        //always {
+        always {
         //    allure([
         //            reportBuildPolicy: 'ALWAYS',
         //            results: [[path: 'alluredir']]
