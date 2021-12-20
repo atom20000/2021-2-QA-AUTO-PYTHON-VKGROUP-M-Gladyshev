@@ -16,13 +16,13 @@ class TestLoginAPI(BaseAPITest):
         3. Авторизация пользователя 
         4. Проверка статуса ответа
 
-        Ожидаемый результат - статус код ответа 302
+        Ожидаемый результат - статус код ответа 200
         """
         user = self.mysql_client.generate_user()
         self.mysql_client.insert_row(user)
         response = self.api_client.login(username=user.username, password=user.password)
         with allure.step('Check that the status code and active'):
-            assert response.status_code == 302
+            assert response.status_code == 200
             assert self.mysql_client.select_user(username=user.username).active == 1
 
     @pytest.mark.negative
@@ -311,7 +311,7 @@ class TestAPI(BaseAPITest):
         """
         user = self.mysql_client.generate_user()
         self.mysql_client.insert_row(user)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/del_user/{user.username}',
             headers=None,
             data=None
@@ -332,7 +332,7 @@ class TestAPI(BaseAPITest):
         Ожидаемый результат - статус код ответа 404, в БД нет запись с данным пользователем
         """
         user = self.mysql_client.generate_user()
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/del_user/{user.username}',
             headers=None,
             data=None
@@ -355,7 +355,7 @@ class TestAPI(BaseAPITest):
         """
         user = self.mysql_client.generate_user()
         self.mysql_client.insert_row(user)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/block_user/{user.username}',
             headers=None,
             data=None
@@ -376,7 +376,7 @@ class TestAPI(BaseAPITest):
         Ожидаемый результат - статус код ответа 404, в БД нет запись с данным пользователем
         """
         user = self.mysql_client.generate_user()
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/block_user/{user.username}',
             headers=None,
             data=None
@@ -399,7 +399,7 @@ class TestAPI(BaseAPITest):
         """
         user = self.mysql_client.generate_user(access=0)
         self.mysql_client.insert_row(user)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/block_user/{user.username}',
             headers=None,
             data=None
@@ -422,7 +422,7 @@ class TestAPI(BaseAPITest):
         """
         user = self.mysql_client.generate_user(access=0)
         self.mysql_client.insert_row(user)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/accept_user/{user.username}',
             headers=None,
             data=None
@@ -443,7 +443,7 @@ class TestAPI(BaseAPITest):
         Ожидаемый результат - статус код ответа 404, в БД нет запись с данным пользователем
         """
         user = self.mysql_client.generate_user(access=0)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/accept_user/{user.username}',
             headers=None,
             data=None
@@ -465,7 +465,7 @@ class TestAPI(BaseAPITest):
         """
         user = self.mysql_client.generate_user(access=0)
         self.mysql_client.insert_row(user)
-        response = self.mysql_client.get_request(
+        response = self.api_client.get_request(
             url=f'api/accept_user/{user.username}',
             headers=None,
             data=None
