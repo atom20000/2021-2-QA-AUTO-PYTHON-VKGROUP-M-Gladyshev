@@ -33,23 +33,32 @@ pipeline {
                 }
             }
         }
+
+
+        stage("Allure"){
+            steps{
+                script{
+                    allure([
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: '$WORKSPACE/alluredir']]
+                    ])
+                }
+            }
+        }
     }
 
     post {
         always {
-            allure([
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: '$WORKSPACE/alluredir']]
-            ])
-            script {
-                withEnv(["NETWORK=$NETWORK"]) {
-                    dir("Final-Project") {
-                        sh 'docker-compose down'
-                        sh "docker network rm $NETWORK"
-                    }
-
-                }
-            }
+            cleanWS()
+            //script {
+            //    withEnv(["NETWORK=$NETWORK"]) {
+            //        dir("Final-Project") {
+            //            sh 'docker-compose down'
+            //            sh "docker network rm $NETWORK"
+            //        }
+            //
+            //    }
+            //}
         }
     }
 }
