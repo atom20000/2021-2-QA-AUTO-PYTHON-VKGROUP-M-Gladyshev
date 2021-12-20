@@ -4,6 +4,6 @@
       - git:
           url: git@github.com:atom20000/2021-2-QA-AUTO-PYTHON-VKGROUP-M-Gladyshev.git
           credentials-id: "be2ab2dc-5119-4e87-a456-e3cbb356af7f"
-          basedir: ./Final-Project
+          basedir: .
           branches:
             - QA-Python-Final-Project

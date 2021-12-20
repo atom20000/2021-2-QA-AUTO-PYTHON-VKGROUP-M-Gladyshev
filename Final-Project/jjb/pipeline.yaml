@@ -6,7 +6,7 @@
     pipeline-scm:
       scm:
         - QA-scm
-      script-path: "pipeline.groovy"
+      script-path: "Final-Project/pipeline.groovy"
 
     wrappers:
       - timestamps
@@ -18,7 +18,7 @@
 
     parameters:
       - string:
-             defaul: "api or ui"
+             default: "api or ui"
              description: 'Pytest marks tests parameter'
              name: 'MARK'
         

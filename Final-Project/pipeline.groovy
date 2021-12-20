@@ -1,4 +1,3 @@
-properties([disableConcurrentBuilds()])
 
 pipeline {
     agent {
@@ -28,7 +27,7 @@ pipeline {
         stage("Start system and tests") {
             steps {
                 withEnv(["NETWORK=$NETWORK"]) {
-                    dir ("$WORKSPACE") {
+                    dir ("Final-Project") {
                         sh "docker-compose up --abort-on-container-exit"
                     }
                 }
@@ -44,7 +43,7 @@ pipeline {
             ])
             script {
                 withEnv(["NETWORK=$NETWORK"]) {
-                    dir("$WORKSPACE") {
+                    dir("Final-Project") {
                         sh 'docker-compose down'
                     }
                 }
