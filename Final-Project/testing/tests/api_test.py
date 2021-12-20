@@ -25,6 +25,7 @@ class TestLoginAPI(BaseAPITest):
             assert response.status_code == 302
             assert self.mysql_client.select_user(username=user.username).active == 1
 
+    @pytest.mark.Bug
     @pytest.mark.negative
     def test_login_negative_non_existent_user(self):
         """
