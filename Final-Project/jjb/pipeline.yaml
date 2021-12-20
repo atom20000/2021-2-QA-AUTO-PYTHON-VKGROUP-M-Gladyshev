@@ -18,7 +18,7 @@
 
     parameters:
       - string:
-             default: "api or ui"
+             default: "API or UI"
              description: 'Pytest marks tests parameter'
              name: 'MARK'
         
