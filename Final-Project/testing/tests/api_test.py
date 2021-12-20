@@ -149,8 +149,9 @@ class TestRegistrationAPI(BaseAPITest):
         Ожидаемый результат - статус код 400, в БД нет записи с данным пользователем
         """
         result = self._registration(password='qa'*128)
-        assert result['response'].status_code == 400
-        assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert result['response'].status_code == 400
+            assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
 
     @pytest.mark.negative
     @pytest.mark.parametrize(
@@ -173,8 +174,9 @@ class TestRegistrationAPI(BaseAPITest):
         Ожидаемый результат - статус код 400, в БД нет записи с данным пользователем
         """
         result = self._registration(email=email)
-        assert result['response'].status_code == 400
-        assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert result['response'].status_code == 400
+            assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
 
     @pytest.mark.negative
     def test_negative_registration_invalid_repassword(self):
@@ -188,8 +190,9 @@ class TestRegistrationAPI(BaseAPITest):
         Ожидаемый результат - статус код 400, в БД нет записи с данным пользователем
         """
         result = self._registration(repassword='1234',password='12')
-        assert result['response'].status_code == 400
-        assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert result['response'].status_code == 400
+            assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
 
 
     @pytest.mark.negative
@@ -208,8 +211,9 @@ class TestRegistrationAPI(BaseAPITest):
         user = self.mysql_client.generate_user()
         self.mysql_client.insert_row(user)
         result = self._registration(email=user.email)
-        assert result['response'].status_code == 500
-        assert len(self.mysql_client.select_user(username=result['user'].username)) == 1
+        with allure.step('Check that the status code and DB'):
+            assert result['response'].status_code == 500
+            assert len(self.mysql_client.select_user(username=result['user'].username)) == 1
 
     @pytest.mark.negative
     def test_negative_reregistration_exist_user(self):
@@ -230,8 +234,9 @@ class TestRegistrationAPI(BaseAPITest):
             email=user.email, 
             password=user.password, 
             repassword=user.password)
-        assert response.status_code == 409
-        assert len(self.mysql_client.select_user(username=user.username)) == 1
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 409
+            assert len(self.mysql_client.select_user(username=user.username)) == 1
 
     @pytest.mark.negative
     def test_negative_registration_dont_accept(self):
@@ -245,8 +250,9 @@ class TestRegistrationAPI(BaseAPITest):
         Ожидаемый результат - статус код 400, в БД нет записи с данным пользователем
         """
         result = self._registration(term='n')
-        assert result['response'].status_code == 400
-        assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert result['response'].status_code == 400
+            assert len(self.mysql_client.select_user(username=result['user'].username)) == 0
 
 @pytest.mark.API
 class TestAPI(BaseAPITest):
@@ -266,8 +272,9 @@ class TestAPI(BaseAPITest):
         response = self.api_client.add_user(username=user.username, 
             email=user.email, 
             password=user.password)
-        assert response.status_code == 201
-        assert len(self.mysql_client.select_user(username=user.username)) == 1
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 201
+            assert len(self.mysql_client.select_user(username=user.username)) == 1
 
     @pytest.mark.negative
     def test_negative_add_user(self):
@@ -286,8 +293,9 @@ class TestAPI(BaseAPITest):
         response = self.api_client.add_user(username=user.username, 
             email=user.email, 
             password=user.password)
-        assert response.status_code == 304
-        assert len(self.mysql_client.select_user(username=user.username)) == 1
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 304
+            assert len(self.mysql_client.select_user(username=user.username)) == 1
 
     @pytest.mark.positive
     def test_delete_user(self):
@@ -308,8 +316,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 204
-        assert len(self.mysql_client.select_user(username=user.username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 204
+            assert len(self.mysql_client.select_user(username=user.username)) == 0
 
     @pytest.mark.negative
     def test_delete_non_exist_user(self):
@@ -328,8 +337,9 @@ class TestAPI(BaseAPITest):
             headers=None,
             data=None
         )
-        assert response.status_code == 404
-        assert len(self.mysql_client.select_user(username=user.username)) == 0
+        with allure.step('Check that the status code and DB'):
+            assert response.status_code == 404
+            assert len(self.mysql_client.select_user(username=user.username)) == 0
 
     @pytest.mark.positive
     def test_block_user(self):

@@ -86,7 +86,7 @@ services:
       - N=${WORKERS}
     volumes:
       - ./testing:/tmp/testing
-      - $WORKSPACE/alluredir:/tmp/allure
+      - ${WORKSPACE}/alluredir:/tmp/allure
     entrypoint: /bin/bash /tmp/testing/start_tests.sh
     depends_on:
       qa_myapp_proxy:
