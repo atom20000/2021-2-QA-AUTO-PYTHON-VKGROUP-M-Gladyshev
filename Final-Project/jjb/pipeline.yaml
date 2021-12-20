@@ -17,14 +17,12 @@
           cron: '* * * * *'
 
     parameters:
-      string(
-             defaultValue: "api or ui",
-             description: 'Pytest marks tests parameter',
+      - string:
+             defaul: "api or ui"
+             description: 'Pytest marks tests parameter'
              name: 'MARK'
-        ) 
-        string(
-             defaultValue: "4",
-             description: 'Workers number',
+        
+      - string:
+             default: "4"
+             description: 'Workers number'
              name: 'WORKERS'
-        ) 
-    }
