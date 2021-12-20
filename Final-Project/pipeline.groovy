@@ -46,28 +46,32 @@ pipeline {
             steps {
                 withEnv(["NETWORK=$NETWORK"]) {
                     dir("Final-Project") {
-                        sh 'docker-compose down -v'
                         sh "docker network rm $NETWORK"
                     }
                 }
             }
         }
 
-        stage("Allure"){
-            steps{
-                script{
-                    allure([
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: '$WORKSPACE/alluredir']]
-                    ])
-                }
-            }
-        }
+        //stage("Allure"){
+        //    steps{
+        //        script{
+        //            allure([
+        //                reportBuildPolicy: 'ALWAYS',
+        //                results: [[path: '$WORKSPACE/alluredir']]
+        //            ])
+        //        }
+        //    }
+        //}
     }
 
     post {
         always {
+            allure([
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: '$WORKSPACE/alluredir']]
+                    ])
             cleanWs() 
+
         }
     }
 }
