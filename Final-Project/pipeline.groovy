@@ -32,7 +32,7 @@ pipeline {
                             sh "docker-compose up "
                         }
                     }
-                } catch(Eeption e){
+                } catch(Exception e){
                     error "Stage interrupted with ${e.toString()}"
                     sh "exit 1"
                 }
