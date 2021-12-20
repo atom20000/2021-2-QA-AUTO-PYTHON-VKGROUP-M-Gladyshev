@@ -18,22 +18,38 @@ pipeline {
         stage("Create docker-compose network") {
             steps {
                 echo 'Start'
-                //sh "docker network inspect $NETWORK >/dev/null"
+                sh "docker network inspect $NETWORK >/dev/null"
                 sh "docker network create $NETWORK"
-                echo 'build done!'
+                echo 'Network created'
             }
         }
 
         stage("Start system and tests") {
             steps {
-                withEnv(["NETWORK=$NETWORK"]) {
-                    dir ("Final-Project") {
-                        sh "docker-compose up --abort-on-container-exit"
+                try{
+                    withEnv(["NETWORK=$NETWORK"]) {
+                        dir ("Final-Project") {
+                            sh "docker-compose up "
+                        }
                     }
+                }catch(Eeption e){
+                    error "Stage interrupted with ${e.toString()}"
+                    sh "exit 1"
                 }
+                
             }
         }
 
+        stage("Remove nemwork and stop docker-compose"){
+            script {
+                withEnv(["NETWORK=$NETWORK"]) {
+                    dir("Final-Project") {
+                        sh 'docker-compose down -v'
+                        sh "docker network rm $NETWORK"
+                    }
+            
+            }
+        }
 
         stage("Allure"){
             steps{
@@ -49,16 +65,8 @@ pipeline {
 
     post {
         always {
-            cleanWS()
-            //script {
-            //    withEnv(["NETWORK=$NETWORK"]) {
-            //        dir("Final-Project") {
-            //            sh 'docker-compose down'
-            //            sh "docker network rm $NETWORK"
-            //        }
-            //
-            //    }
-            //}
+            cleanWs() 
+            }
         }
     }
 }
