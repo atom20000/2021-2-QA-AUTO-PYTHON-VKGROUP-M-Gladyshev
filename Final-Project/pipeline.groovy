@@ -30,7 +30,7 @@ pipeline {
                     try{
                         withEnv(["NETWORK=$NETWORK"]) {
                             dir ("Final-Project") {
-                                sh "docker-compose up "
+                                sh "docker-compose up --abort-on-container-exit"
                             }
                         }
                     } catch(Exception e){
